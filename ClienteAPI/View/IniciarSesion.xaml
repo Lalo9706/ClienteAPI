@@ -1,0 +1,40 @@
+﻿<Window x:Class="ClienteAPI.View.IniciarSesion"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClienteAPI.View"
+        mc:Ignorable="d"
+        Title="IniciarSesion" Height="500" Width="400">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/> <!--Tittle-->
+            <RowDefinition Height="40"/> <!--Correo-->
+            <RowDefinition Height="30"/> <!--TextBox Correo-->
+            <RowDefinition Height="40"/> <!--Contraseña-->
+            <RowDefinition Height="30"/> <!--TextBox Contraseña-->
+            
+            <RowDefinition Height="30"/> <!--Black Space-->
+            <RowDefinition Height="50"/> <!--Button Iniciar Sesión-->
+            <RowDefinition Height="50"/> <!--Button Registrarse-->
+            <RowDefinition Height="*"/> <!--Button Volver-->
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Content="Inicio de Sesión" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+
+        <Label Grid.Row="1" Content="Correo:" FontSize="18" Width="210"
+               HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+               VerticalContentAlignment="Center"/>
+        <TextBox Grid.Row="2" Width="210" BorderBrush="Black" VerticalContentAlignment="Center" Text="{Binding Correo}"/>
+
+        <Label Grid.Row="3" Content="Contraseña:" FontSize="18" Width="210"
+               HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+               VerticalContentAlignment="Center"/>
+        <PasswordBox Grid.Row="4" Width="210" BorderBrush="Black" VerticalContentAlignment="Center" />
+
+        <Button Grid.Row="6" Content="Iniciar Sesión" FontSize="15" Width="150" Height="35" Command="{Binding ClickIniciarSesion}"/>
+        <Button Grid.Row="7" Content="Registrarse" FontSize="15" Width="150" Height="35" Command="{Binding ClickRegistrarse}" />
+        <Button Grid.Row="8" Content="Volver" FontSize="15" Width="100" Height="35" HorizontalAlignment="Left" VerticalAlignment="Bottom" Command="{Binding ClickVolver}"/>
+
+    </Grid>
+</Window>

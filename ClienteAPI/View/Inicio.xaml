@@ -12,13 +12,14 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="300" />
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="350" />
         </Grid.ColumnDefinitions>
 
         <!--#region BANNER-->
 
-        <Grid Grid.Row="0" Grid.Column="0">
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="*"/>
@@ -53,9 +54,9 @@
         </Grid>
 
         <Button
-            Grid.Column="1"
+            Grid.Column="2"
             Name="btnRegistrarLaptop"
-            Margin="70,35"
+            Margin="70,35,70,35"
             Content="Registrar Laptop"
             FontSize="15"
             Command="{Binding ClickRegistrarLaptop}"
@@ -66,7 +67,7 @@
         <!--#region TABLA-->
         <Rectangle
             Grid.Row="1" 
-            Margin="10" 
+            Margin="10,10,10,10" 
             Stroke="Black" 
             StrokeThickness="2"/>
         <Label
@@ -75,18 +76,36 @@
             FontWeight="Bold" FontSize="15"
             Background="White"
             VerticalAlignment="Top"
-            Margin="20,0,391,0"
+            Margin="20,0,332,0"
             HorizontalContentAlignment="Stretch"
             Width="Auto"/>
 
-        <DataGrid Margin="30" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding ListaLaptops}" />
+        <DataGrid Margin="30,30,30,30" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding ListaLaptops}" SelectedItem="{Binding LaptopSeleccionada}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="ID" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding ID}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Modelo" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Modelo}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
 
         <!--#endregion-->
 
 
         <!--#region PANEL DERECHO-->
 
-        <Grid Grid.Row="1" Grid.Column="1">
+        <Grid Grid.Row="1" Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="150" />
