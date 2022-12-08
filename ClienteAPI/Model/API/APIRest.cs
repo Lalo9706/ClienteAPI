@@ -21,6 +21,7 @@ namespace ClienteAPI.Model.API
     {
 
         public static string URLGetUsuarioPorCorreo = "https://web-production-2d2f.up.railway.app/usuario/correo/";
+        public static string URLGetLaptops = "https://web-production-2d2f.up.railway.app/laptops";
 
         public static async Task<string> GetUsuarioPorCorreo(string correo)
         {
@@ -34,6 +35,23 @@ namespace ClienteAPI.Model.API
                 }
             }
             catch (WebException ex)
+            {
+                return "404";
+            }
+        }
+
+        public static async Task<string> GetLaptops()
+        {
+            try
+            {
+                WebRequest onRequest = WebRequest.Create(URLGetLaptops);
+                using (HttpWebResponse onResponse = (HttpWebResponse)onRequest.GetResponse())
+                {
+                    StreamReader reader = new StreamReader(onResponse.GetResponseStream());
+                    return await reader.ReadToEndAsync();
+                }
+            }
+            catch(WebException ex)
             {
                 return "404";
             }

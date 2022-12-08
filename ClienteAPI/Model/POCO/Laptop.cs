@@ -8,7 +8,7 @@ namespace ClienteAPI.Model.POCO
 {
     public class Laptop
     {
-        public int idRegistro { get; set; }
+        public string idRegistro { get; set; }
         public string modelo { get; set; }
         public string memoriaRam { get; set; }
         public string tarjetaVideo { get; set; }

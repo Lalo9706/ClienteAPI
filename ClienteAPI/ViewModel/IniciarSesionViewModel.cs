@@ -92,17 +92,17 @@ namespace ClienteAPI.ViewModel
 
                 if(respuesta != "404")
                 {
-                    Usuario usuario = deserializarUsuario(respuesta);
+                    Usuario usuario = DeserializarUsuario(respuesta);
 
 
                     //Validación Usuario 1
                     if (_contraseña == usuario.contrasena)
                     {
                         MessageBox.Show("Inicio de Sesión Exitoso", "Aviso");
-                        Inicio inicio = new Inicio();
+                        InicioUsuario inicioUsuario = new InicioUsuario();
                         Application.Current.MainWindow.Close();
                         System.Threading.Thread.Sleep(1000);
-                        inicio.Show();
+                        inicioUsuario.Show();
                     }
                     else
                     {
@@ -112,7 +112,6 @@ namespace ClienteAPI.ViewModel
                 else
                 {
                     MessageBox.Show("No existe un usuario con es correo electronico","Alerta");
-                    
                 }
             }
             else
@@ -124,7 +123,7 @@ namespace ClienteAPI.ViewModel
 
         }
 
-        public Usuario deserializarUsuario(string respuesta)
+        public Usuario DeserializarUsuario(string respuesta)
         {
             Usuario user = JsonConvert.DeserializeObject<Usuario>(respuesta);
             return user;

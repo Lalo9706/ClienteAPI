@@ -1,30 +1,26 @@
-﻿using ClienteAPI.Model.API;
-using ClienteAPI.Model.POCO;
+﻿using ClienteAPI.Model.POCO;
 using ClienteAPI.View;
 using CommunityToolkit.Mvvm.Input;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows;
+using ClienteAPI.Model.API;
+using Newtonsoft.Json;
 
 namespace ClienteAPI.ViewModel
 {
-    public class InicioViewModel : BaseViewModel
+    public class InicioUsuarioViewModel : BaseViewModel
     {
 
-        public InicioViewModel()
+        public InicioUsuarioViewModel()
         {
             ObtenerLaptopsAsync();
         }
-
 
         #region ATTRIBUTES
 
@@ -33,11 +29,11 @@ namespace ClienteAPI.ViewModel
 
         public string idRegistro = "";
         public string modelo = "";
-        public string procesador = "";
-        public string tarjetaVideo = "";
         public string memoriaRam = "";
-        public string almacenamiento = "";
+        public string tarjetaVideo = "";
         public string pantalla = "";
+        public string almacenamiento = "";
+        public string procesador = "";
 
         public string txtBuscar = "";
 
@@ -135,15 +131,15 @@ namespace ClienteAPI.ViewModel
             set { }
         }
 
-        public ICommand ClickIniciarSesion
+        public ICommand ClickVerPerfil
         {
-            get { return new RelayCommand(IniciarSesion); }
+            get { return new RelayCommand(VerPerfil); }
             set { }
         }
 
-        public ICommand ClickRegistrarse
+        public ICommand ClickCerrarSesion
         {
-            get { return new RelayCommand(Registrarse); }
+            get { return new RelayCommand(CerrarSesion); }
             set { }
         }
 
@@ -184,7 +180,7 @@ namespace ClienteAPI.ViewModel
         #region Botones
         private void Buscar()
         {
-            if(TxtBuscar != "")
+            if (TxtBuscar != "")
             {
                 isNumber = int.TryParse(this.TxtBuscar, out busquedaID);
                 if (isNumber == true)
@@ -202,7 +198,6 @@ namespace ClienteAPI.ViewModel
                 MessageBox.Show("Especifica primero la busqueda");
             }
 
-            
         }
 
         private void RegistrarLaptop()
@@ -212,7 +207,7 @@ namespace ClienteAPI.ViewModel
 
         private void VerDetalles()
         {
-            if(LaptopSeleccionada == null)
+            if (LaptopSeleccionada == null)
             {
                 MessageBox.Show("Primero selecciona una laptop de la lista");
             }
@@ -227,24 +222,25 @@ namespace ClienteAPI.ViewModel
             }
         }
 
-        private void IniciarSesion()
-        {
-            IniciarSesion ventanaIniciarSesión = new();
-            Application.Current.MainWindow.Close();
-            ventanaIniciarSesión.Show();
-        }
-
-        private void Registrarse()
+        private void VerPerfil()
         {
             MessageBox.Show("Botón Registrarse Presionado");
+        }
+
+        private void CerrarSesion()
+        {
+            Inicio inicio = new Inicio();
+            Application.Current.MainWindow.Close();
+            inicio.Show();
         }
 
         #endregion
 
         #region Logica
+
         private void ObtenerLaptopPorID(int busquedaID)
         {
-            MessageBox.Show("Metódo Buscar Laptop por ID: "+busquedaID);
+            MessageBox.Show("Metódo Buscar Laptop por ID: " + busquedaID);
         }
 
         private void ObtenerLaptopPorModelo(string busquedaModelo)
@@ -255,6 +251,7 @@ namespace ClienteAPI.ViewModel
         #endregion
 
         #endregion
+
 
     }
 }
