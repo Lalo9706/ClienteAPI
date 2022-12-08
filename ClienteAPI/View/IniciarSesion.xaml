@@ -30,7 +30,7 @@
         <Label Grid.Row="3" Content="Contraseña:" FontSize="18" Width="210"
                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                VerticalContentAlignment="Center"/>
-        <PasswordBox Grid.Row="4" Width="210" BorderBrush="Black" VerticalContentAlignment="Center" />
+        <TextBox x:Name="txtPassword" Grid.Row="4" Width="210" BorderBrush="Black" VerticalContentAlignment="Center" Text="{Binding Contraseña}" Foreground="White"/>
 
         <Button Grid.Row="6" Content="Iniciar Sesión" FontSize="15" Width="150" Height="35" Command="{Binding ClickIniciarSesion}"/>
         <Button Grid.Row="7" Content="Registrarse" FontSize="15" Width="150" Height="35" Command="{Binding ClickRegistrarse}" />

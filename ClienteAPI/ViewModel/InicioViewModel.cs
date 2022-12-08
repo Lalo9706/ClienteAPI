@@ -26,9 +26,9 @@ namespace ClienteAPI.ViewModel
         private void InicializarDatos()
         {
             ListaLaptops = new ObservableCollection<Laptop>();
-            ListaLaptops.Add(new Laptop() { ID = 2300, Modelo = "HP Pavilion Y21H", CPU = "Ryzen 7", GPU = "RADEON GRAPHICS 7", RAM = "16 GB DDR4", Almacenamiento = "500 GB SSD" });
-            ListaLaptops.Add(new Laptop() { ID = 2400, Modelo = "LENOVO ThinkPad F720", CPU = "Intel Core i8", GPU = "GEFORCE GTX 14221", RAM = "16 GB DDR4", Almacenamiento = "1000 GB SSD" });
-            ListaLaptops.Add(new Laptop() { ID = 2444, Modelo = "Acer GTurbo 10", CPU = "Intel Core i7", GPU ="GEFORCE GTX 14050", RAM = "18 GB DDR4", Almacenamiento = "500 GB SSD" });
+            ListaLaptops.Add(new Laptop() { idRegistro = 2300, modelo = "HP Pavilion Y21H", procesador = "Ryzen 7", tarjetaVideo = "RADEON GRAPHICS 7", memoriaRam = "16 GB DDR4", almacenamiento = "500 GB SSD" });
+            ListaLaptops.Add(new Laptop() { idRegistro = 2400, modelo = "LENOVO ThinkPad F720", procesador = "Intel Core i8", tarjetaVideo = "GEFORCE GTX 14221", memoriaRam = "16 GB DDR4", almacenamiento = "1000 GB SSD" });
+            ListaLaptops.Add(new Laptop() { idRegistro = 2444, modelo = "Acer GTurbo 10", procesador = "Intel Core i7", tarjetaVideo ="GEFORCE GTX 14050", memoriaRam = "18 GB DDR4", almacenamiento = "500 GB SSD" });
         }
 
 
@@ -194,12 +194,12 @@ namespace ClienteAPI.ViewModel
             }
             else
             {
-                ID = LaptopSeleccionada.ID;
-                Modelo = LaptopSeleccionada.Modelo;
-                CPU = LaptopSeleccionada.CPU;
-                GPU = LaptopSeleccionada.GPU;
-                RAM = LaptopSeleccionada.RAM;
-                Almacenamiento = LaptopSeleccionada.Almacenamiento;
+                ID = LaptopSeleccionada.idRegistro;
+                Modelo = LaptopSeleccionada.modelo;
+                CPU = LaptopSeleccionada.procesador;
+                GPU = LaptopSeleccionada.tarjetaVideo;
+                RAM = LaptopSeleccionada.memoriaRam;
+                Almacenamiento = LaptopSeleccionada.almacenamiento;
             }
         }
 

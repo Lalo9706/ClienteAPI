@@ -1,12 +1,19 @@
-﻿using ClienteAPI.View;
+﻿using ClienteAPI.Model.API;
+using ClienteAPI.Model.POCO;
+using ClienteAPI.View;
 using CommunityToolkit.Mvvm.Input;
-using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace ClienteAPI.ViewModel
 {
@@ -17,11 +24,11 @@ namespace ClienteAPI.ViewModel
 
         }
 
-
         #region ATTRIBUTES
 
         public string correo = "";
         public string contraseña = "";
+        
 
         #endregion
 
@@ -47,7 +54,7 @@ namespace ClienteAPI.ViewModel
 
         public ICommand ClickIniciarSesion
         {
-            get { return new RelayCommand(IniciarSesion); }
+            get {  return new RelayCommand(IniciarSesion); }
             set { }
         }
 
@@ -71,31 +78,61 @@ namespace ClienteAPI.ViewModel
 
         private void IniciarSesion()
         {
-            Boolean validacion1 = false;
-            Boolean validacion2 = false;
+            IniciarSesionAsync();
+        }
+
+        private async void IniciarSesionAsync()
+        {
             string _correo = this.Correo;
             string _contraseña = this.Contraseña;
 
-            if(_correo != "")
+            if(!_correo.Equals("") && !_contraseña.Equals(""))
             {
-                validacion1 = true;
-            }
-            if(_contraseña != "")
-            {
-                validacion2 = true;
-            }
-            if(validacion1 && validacion2)
-            {
-                MessageBox.Show("Iniciando sesión");
+                string respuesta = await APIRest.GetUsuarioPorCorreo(_correo);
+
+                if(respuesta != "404")
+                {
+                    Usuario usuario = deserializarUsuario(respuesta);
+
+
+                    //Validación Usuario 1
+                    if (_contraseña == usuario.contrasena)
+                    {
+                        MessageBox.Show("Inicio de Sesión Exitoso", "Aviso");
+                        Inicio inicio = new Inicio();
+                        Application.Current.MainWindow.Close();
+                        System.Threading.Thread.Sleep(1000);
+                        inicio.Show();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Contraseña incorrecta", "Alerta");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No existe un usuario con es correo electronico","Alerta");
+                    
+                }
             }
             else
             {
-                MessageBox.Show("HAY CAMPOS VACIOS");
+                MessageBox.Show("Hay campos vacios", "Alerta");
             }
 
+                
 
-            
         }
+
+        public Usuario deserializarUsuario(string respuesta)
+        {
+            Usuario user = JsonConvert.DeserializeObject<Usuario>(respuesta);
+            return user;
+        }
+
+
+
+        
 
         private void Registrarse()
         {
