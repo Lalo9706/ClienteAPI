@@ -26,8 +26,8 @@ namespace ClienteAPI.ViewModel
 
         #region ATTRIBUTES
 
-        public string correo = "";
-        public string contraseña = "";
+        public string correo = "hector.morelos.607@gmail.com";
+        public string contraseña = "HALOcea205";
         
 
         #endregion

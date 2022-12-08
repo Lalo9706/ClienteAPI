@@ -228,7 +228,9 @@ namespace ClienteAPI.ViewModel
 
         private void RegistrarLaptop()
         {
-            MessageBox.Show("Ventana Registrar Laptop", "Aviso");
+            RegistrarLaptop registrarLaptop = new RegistrarLaptop();
+            Application.Current.MainWindow.Close();
+            registrarLaptop.Show();
         }
 
         private void VerDetalles()

@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClienteAPI.View"
         mc:Ignorable="d"
-        Title="IniciarSesion" Height="500" Width="400">
+        Title="IniciarSesion" Height="500" Width="400"
+        WindowStartupLocation="CenterScreen">
+    
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/> <!--Tittle-->

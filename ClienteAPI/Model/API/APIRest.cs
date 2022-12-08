@@ -13,7 +13,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace ClienteAPI.Model.API
 {
@@ -24,6 +23,7 @@ namespace ClienteAPI.Model.API
         public static string URLGetLaptops = "/laptops";
         public static string URLGetLaptopID = "/laptop/";
         public static string URLGetLaptopModelo = "/laptopModelo/";
+        public static string URLPostLaptop = "/laptop";
 
         public static async Task<string> GetUsuarioPorCorreo(string correo)
         {
@@ -90,6 +90,23 @@ namespace ClienteAPI.Model.API
             catch (WebException)
             {
                 return "404";
+            }
+        }
+
+        public static async Task<string> PostLaptop(Laptop laptop)
+        {
+            var client = new HttpClient();
+            var response = JsonConvert.SerializeObject(laptop);
+            HttpContent content = new StringContent(response, Encoding.UTF8, "application/json");
+            var httpResponse = await client.PostAsync(URLAPI+URLPostLaptop, content);
+
+            if (httpResponse.IsSuccessStatusCode)
+            {
+                return await httpResponse.Content.ReadAsStringAsync();
+            }
+            else
+            {
+                return "500";
             }
         }
     }
