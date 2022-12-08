@@ -1,4 +1,5 @@
-﻿using ClienteAPI.ViewModel;
+﻿using ClienteAPI.Model.POCO;
+using ClienteAPI.ViewModel;
 using System.Windows;
 
 namespace ClienteAPI.View
@@ -13,5 +14,13 @@ namespace ClienteAPI.View
             InitializeComponent();
             DataContext = new InicioUsuarioViewModel();
         }
+
+        public InicioUsuario(Usuario usuario)
+        {
+            InitializeComponent();
+            DataContext = new InicioUsuarioViewModel(usuario);
+        }
+
+        
     }
 }

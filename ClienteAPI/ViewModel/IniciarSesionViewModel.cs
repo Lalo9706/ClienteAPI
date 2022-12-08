@@ -99,7 +99,7 @@ namespace ClienteAPI.ViewModel
                     if (_contraseña == usuario.contrasena)
                     {
                         MessageBox.Show("Inicio de Sesión Exitoso", "Aviso");
-                        InicioUsuario inicioUsuario = new InicioUsuario();
+                        InicioUsuario inicioUsuario = new InicioUsuario(usuario);
                         Application.Current.MainWindow.Close();
                         System.Threading.Thread.Sleep(1000);
                         inicioUsuario.Show();

@@ -25,7 +25,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Content="INICIO" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Button Grid.Column="0"
+                   Content="INICIO" FontSize="30" Background="Transparent" BorderBrush="Transparent"
+                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                   Command="{Binding ClickInicio}"/>
 
             <!--#region Buscador-->
             <TextBox
@@ -49,6 +52,11 @@
                 Margin="10,0"
                 Command="{Binding ClickBuscar}"
                 />
+            <CheckBox Grid.Column="1"
+                      Content="Buscar por ID" 
+                      HorizontalAlignment="Left" Margin="0,70,0,0" 
+                      VerticalAlignment="Top" Width="100"
+                      IsChecked="{Binding CheckBoxBuscarPorID}"/>
 
             <!--#endregion-->
         </Grid>
@@ -131,7 +139,7 @@
                 Margin="20,0,80,0" 
                 HorizontalContentAlignment="Stretch" Width="Auto"/>
 
-            <Grid Grid.Row="0" Margin="30,30,30,30">
+            <Grid Grid.Row="0" Margin="30,30,30,20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
@@ -139,7 +147,8 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="40" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="107*"/>
@@ -154,6 +163,7 @@
                 <Label Grid.Row="3" Content="GPU: " VerticalContentAlignment="Center" FontWeight="Bold"/>
                 <Label Grid.Row="4" Content="RAM: " VerticalContentAlignment="Center" FontWeight="Bold"/>
                 <Label Grid.Row="5" Content="Almacenamiento: " VerticalContentAlignment="Center" FontWeight="Bold"/>
+                <Label Grid.Row="6" Content="Pantalla: " VerticalContentAlignment="Center" FontWeight="Bold"/>
 
                 <Label Grid.Row="0" Grid.Column="1" Content="{Binding ID}" VerticalContentAlignment="Center" Name="lblID"/>
                 <Label Grid.Row="1" Grid.Column="1" Content="{Binding Modelo}" VerticalContentAlignment="Center" Name="lblModelo"/>
@@ -161,7 +171,8 @@
                 <Label Grid.Row="3" Grid.Column="1" Content="{Binding GPU}" VerticalContentAlignment="Center" Name="lblGPU"/>
                 <Label Grid.Row="4" Grid.Column="1" Content="{Binding RAM}" VerticalContentAlignment="Center" Name="lblRAM"/>
                 <Label Grid.Row="5" Grid.Column="1" Content="{Binding Almacenamiento}" VerticalContentAlignment="Center" Name="lblAlmacenamiento"/>
-                <Button Grid.Row="6" Content="Ver Detalles" FontSize="15" Width="170" Height="30" Grid.ColumnSpan="2" HorizontalAlignment="Center" Command="{Binding ClickVerDetalles}"/>
+                <Label Grid.Row="6" Grid.Column="1" Content="{Binding Pantalla}" VerticalContentAlignment="Center" Name="lblPantalla"/>
+                <Button Grid.Row="7" Content="Ver Detalles" FontSize="15" Width="170" Height="30" Grid.ColumnSpan="2" HorizontalAlignment="Center" Command="{Binding ClickVerDetalles}"/>
 
             </Grid>
 

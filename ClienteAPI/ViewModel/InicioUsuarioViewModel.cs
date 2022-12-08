@@ -17,12 +17,25 @@ namespace ClienteAPI.ViewModel
     public class InicioUsuarioViewModel : BaseViewModel
     {
 
+        #region CONSTRUCTOR
         public InicioUsuarioViewModel()
         {
             ObtenerLaptopsAsync();
         }
 
+        public InicioUsuarioViewModel(Usuario usuario)
+        {
+            ObtenerLaptopsAsync();
+            this.usuarioActual = usuario;
+            this.NombreUsuario = usuarioActual.nombreUsuario;
+        }
+
+        #endregion CONSTRUCTOR
+
         #region ATTRIBUTES
+
+        public Usuario usuarioActual;
+        public string nombreUsuario = "";
 
         private Laptop laptopSeleccionada = new Laptop();
         private ObservableCollection<Laptop> listaLaptops = new ObservableCollection<Laptop>();
@@ -36,15 +49,22 @@ namespace ClienteAPI.ViewModel
         public string procesador = "";
 
         public string txtBuscar = "";
+        public Boolean checkboxBuscarPorID = false;
 
         //Variables
-        bool isNumber = false;
-        public int busquedaID = 0;
-        public string busquedaModelo = "";
+        public string busqueda = "";
 
-        #endregion
+        #endregion ATTRIBUTES
 
         #region PROPERTIES
+
+        //Usuario
+
+        public string NombreUsuario
+        {
+            get { return this.nombreUsuario; }
+            set { SetValue(ref this.nombreUsuario, value); }
+        }
 
         //Busqueda
 
@@ -52,6 +72,12 @@ namespace ClienteAPI.ViewModel
         {
             get { return this.txtBuscar; }
             set { SetValue(ref this.txtBuscar, value); }
+        }
+
+        public Boolean CheckBoxBuscarPorID
+        {
+            get { return this.checkboxBuscarPorID; }
+            set { SetValue(ref this.checkboxBuscarPorID, value); }
         }
 
         //Colección de Laptops
@@ -109,9 +135,21 @@ namespace ClienteAPI.ViewModel
             set { SetValue(ref this.almacenamiento, value); }
         }
 
-        #endregion
+        public string Pantalla
+        {
+            get { return this.pantalla; }
+            set { SetValue(ref this.pantalla, value); }
+        }
+
+        #endregion PROPERTIES
 
         #region COMMANDS
+
+        public ICommand ClickInicio
+        {
+            get { return new RelayCommand(Reiniciar); }
+            set { }
+        }
 
         public ICommand ClickBuscar
         {
@@ -131,6 +169,18 @@ namespace ClienteAPI.ViewModel
             set { }
         }
 
+        public ICommand ClickIniciarSesion
+        {
+            get { return new RelayCommand(IniciarSesion); }
+            set { }
+        }
+
+        public ICommand ClickRegistrarse
+        {
+            get { return new RelayCommand(Registrarse); }
+            set { }
+        }
+
         public ICommand ClickVerPerfil
         {
             get { return new RelayCommand(VerPerfil); }
@@ -143,9 +193,86 @@ namespace ClienteAPI.ViewModel
             set { }
         }
 
-        #endregion
+        #endregion COMMANDS
 
         #region METHODS
+
+        #region Botones
+
+        private void Reiniciar()
+        {
+            this.ListaLaptops.Clear();
+            ObtenerLaptopsAsync();
+        }
+
+        private void Buscar()
+        {
+            if (TxtBuscar != "")
+            {
+                //isNumber = int.TryParse(this.TxtBuscar, out busquedaID);
+                if (this.CheckBoxBuscarPorID == true)
+                {
+                    ObtenerLaptopPorIDAsync(this.TxtBuscar);
+                }
+                else
+                {
+                    ObtenerLaptopPorModeloAsync(this.TxtBuscar);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Especifica primero la busqueda");
+            }
+
+        }
+
+        private void RegistrarLaptop()
+        {
+            MessageBox.Show("Ventana Registrar Laptop", "Aviso");
+        }
+
+        private void VerDetalles()
+        {
+            if (LaptopSeleccionada == null)
+            {
+                MessageBox.Show("Primero selecciona una laptop de la lista");
+            }
+            else
+            {
+                ID = LaptopSeleccionada.idRegistro;
+                Modelo = LaptopSeleccionada.modelo;
+                CPU = LaptopSeleccionada.procesador;
+                GPU = LaptopSeleccionada.tarjetaVideo;
+                RAM = LaptopSeleccionada.memoriaRam;
+                Almacenamiento = LaptopSeleccionada.almacenamiento;
+            }
+        }
+
+        private void IniciarSesion()
+        {
+            IniciarSesion ventanaIniciarSesión = new();
+            Application.Current.MainWindow.Close();
+            ventanaIniciarSesión.Show();
+        }
+
+        private void Registrarse()
+        {
+            MessageBox.Show("Botón Registrarse Presionado");
+        }
+
+        private void VerPerfil()
+        {
+            MessageBox.Show("Botón Ver Perfil Presionado");
+        }
+
+        private void CerrarSesion()
+        {
+            Inicio inicio = new Inicio();
+            Application.Current.MainWindow.Close();
+            inicio.Show();
+        }
+
+        #endregion
 
         #region DatosIniciales
 
@@ -169,88 +296,64 @@ namespace ClienteAPI.ViewModel
             }
         }
 
+        #endregion
+
+        #region Logica
+
+        private async Task ObtenerLaptopPorIDAsync(string busqueda)
+        {
+            string response = await APIRest.GetLaptopPorID(busqueda);
+            if(response != "404")
+            {
+                Laptop laptop = DeserializarLaptop(response);
+                this.ListaLaptops.Clear();
+                this.ListaLaptops.Add(laptop);
+            }
+            else
+            {
+                MessageBox.Show("No se encontró el ID de la laptop", "Aviso");
+            }
+
+
+        }
+
+        private async Task ObtenerLaptopPorModeloAsync(string busqueda)
+        {
+            string response = await APIRest.GetLaptopPorModelo(busqueda);
+            if (response != "404")
+            {
+                List<Laptop> laptops = DeserializarLaptops(response);
+                this.ListaLaptops.Clear();
+                foreach (Laptop laptop in laptops)
+                {
+                    this.ListaLaptops.Add(laptop);
+                }
+            }
+            else
+            {
+                MessageBox.Show("No se encontró el Modelo de la laptop", "Aviso");
+            }
+        }
+
+        #endregion
+
+        #region Deserialización
+
         private List<Laptop> DeserializarLaptops(string response)
         {
             List<Laptop> laptops = JsonConvert.DeserializeObject<List<Laptop>>(response);
             return laptops;
         }
 
-        #endregion
-
-        #region Botones
-        private void Buscar()
+        private Laptop DeserializarLaptop(string response)
         {
-            if (TxtBuscar != "")
-            {
-                isNumber = int.TryParse(this.TxtBuscar, out busquedaID);
-                if (isNumber == true)
-                {
-                    ObtenerLaptopPorID(busquedaID);
-                }
-                else
-                {
-                    busquedaModelo = TxtBuscar;
-                    ObtenerLaptopPorModelo(busquedaModelo);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Especifica primero la busqueda");
-            }
-
-        }
-
-        private void RegistrarLaptop()
-        {
-            MessageBox.Show("Botón Registrar Laptop Presionado");
-        }
-
-        private void VerDetalles()
-        {
-            if (LaptopSeleccionada == null)
-            {
-                MessageBox.Show("Primero selecciona una laptop de la lista");
-            }
-            else
-            {
-                ID = LaptopSeleccionada.idRegistro;
-                Modelo = LaptopSeleccionada.modelo;
-                CPU = LaptopSeleccionada.procesador;
-                GPU = LaptopSeleccionada.tarjetaVideo;
-                RAM = LaptopSeleccionada.memoriaRam;
-                Almacenamiento = LaptopSeleccionada.almacenamiento;
-            }
-        }
-
-        private void VerPerfil()
-        {
-            MessageBox.Show("Botón Registrarse Presionado");
-        }
-
-        private void CerrarSesion()
-        {
-            Inicio inicio = new Inicio();
-            Application.Current.MainWindow.Close();
-            inicio.Show();
+            Laptop laptop = JsonConvert.DeserializeObject<Laptop>(response);
+            return laptop;
         }
 
         #endregion
 
-        #region Logica
-
-        private void ObtenerLaptopPorID(int busquedaID)
-        {
-            MessageBox.Show("Metódo Buscar Laptop por ID: " + busquedaID);
-        }
-
-        private void ObtenerLaptopPorModelo(string busquedaModelo)
-        {
-            MessageBox.Show("Metódo Buscar Laptop por Modelo: " + busquedaModelo);
-        }
-
-        #endregion
-
-        #endregion
+        #endregion METHODS
 
 
     }
