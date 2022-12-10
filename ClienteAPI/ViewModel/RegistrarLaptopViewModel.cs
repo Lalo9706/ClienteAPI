@@ -16,6 +16,10 @@ namespace ClienteAPI.ViewModel
 
         #region ATTRIBUTES
 
+        //API
+        public APIRest apirest = new APIRest();
+
+        //Datos de la laptop
         public string modelo = "";
         public string procesador = "";
         public string tarjetaVideo = "";
@@ -92,7 +96,7 @@ namespace ClienteAPI.ViewModel
                 !this.Almacenamiento.Equals("") &&
                 !this.Pantalla.Equals(""))
             {
-                Laptop laptop = new Laptop();
+                Laptop laptop = new();
                 laptop.idRegistro = "r";
                 laptop.modelo = this.Modelo;
                 laptop.procesador = this.Procesador;
@@ -101,7 +105,7 @@ namespace ClienteAPI.ViewModel
                 laptop.almacenamiento = this.Almacenamiento;
                 laptop.pantalla = this.Pantalla;
 
-                string response = await APIRest.PostLaptop(laptop);
+                string response = await apirest.PostLaptop(laptop);
                 if(response != "500")
                 {
                     MessageBox.Show("Laptop Registrada con Exito", "Aviso");

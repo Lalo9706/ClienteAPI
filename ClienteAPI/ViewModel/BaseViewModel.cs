@@ -10,14 +10,14 @@ namespace ClienteAPI.ViewModel
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        protected void SetValue<T>(ref T backingFieled, T value, [CallerMemberName] string propertyName = null)
+        protected void SetValue<T>(ref T backingFieled, T value, [CallerMemberName] string? propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(backingFieled, value))
             {
@@ -27,13 +27,9 @@ namespace ClienteAPI.ViewModel
             OnPropertyChanged(propertyName);
         }
 
-        protected virtual void OnPropertyChangeds([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChangeds([CallerMemberName] string? propertyName = null)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

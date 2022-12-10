@@ -19,19 +19,20 @@ namespace ClienteAPI.ViewModel
 {
     public class IniciarSesionViewModel : BaseViewModel
     {
-        public IniciarSesionViewModel()
-        {
 
-        }
+        #region CONSTRUCTOR
+        public IniciarSesionViewModel() { }
+
+        #endregion CONSTRUCTOR
 
         #region ATTRIBUTES
 
         public string correo = "hector.morelos.607@gmail.com";
         public string contraseña = "HALOcea205";
-        
+
+        public APIRest apirest = new();
 
         #endregion
-
 
         #region PROPERTIES
 
@@ -49,7 +50,6 @@ namespace ClienteAPI.ViewModel
 
         #endregion
 
-
         #region COMMANDS
 
         public ICommand ClickIniciarSesion
@@ -57,8 +57,6 @@ namespace ClienteAPI.ViewModel
             get {  return new RelayCommand(IniciarSesion); }
             set { }
         }
-
-        
 
         public ICommand ClickRegistrarse
         {
@@ -70,9 +68,7 @@ namespace ClienteAPI.ViewModel
             get { return new RelayCommand(Volver); }
         }
 
-
         #endregion
-
 
         #region METHODS
 
@@ -88,18 +84,19 @@ namespace ClienteAPI.ViewModel
 
             if(!_correo.Equals("") && !_contraseña.Equals(""))
             {
-                string respuesta = await APIRest.GetUsuarioPorCorreo(_correo);
+                
+                Usuario? usuario = await apirest.GetUsuarioPorCorreo(_correo);
 
-                if(respuesta != "404")
+                if(usuario != null)
                 {
-                    Usuario usuario = DeserializarUsuario(respuesta);
+                    //Usuario usuario1 = DeserializarUsuario(respuesta);
 
 
                     //Validación Usuario 1
                     if (_contraseña == usuario.contrasena)
                     {
                         MessageBox.Show("Inicio de Sesión Exitoso", "Aviso");
-                        InicioUsuario inicioUsuario = new InicioUsuario(usuario);
+                        InicioUsuario inicioUsuario = new(usuario);
                         Application.Current.MainWindow.Close();
                         System.Threading.Thread.Sleep(1000);
                         inicioUsuario.Show();
@@ -118,20 +115,13 @@ namespace ClienteAPI.ViewModel
             {
                 MessageBox.Show("Hay campos vacios", "Alerta");
             }
-
-                
-
         }
 
-        public Usuario DeserializarUsuario(string respuesta)
+        public Usuario? DeserializarUsuario(string respuesta)
         {
-            Usuario user = JsonConvert.DeserializeObject<Usuario>(respuesta);
+            Usuario? user = JsonConvert.DeserializeObject<Usuario>(respuesta);
             return user;
         }
-
-
-
-        
 
         private void Registrarse()
         {
@@ -144,7 +134,6 @@ namespace ClienteAPI.ViewModel
             Application.Current.MainWindow.Close();
             ventanaInicio.Show();
         }
-
 
         #endregion
 

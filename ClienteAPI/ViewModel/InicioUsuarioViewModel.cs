@@ -11,6 +11,9 @@ using System.Windows.Input;
 using System.Windows;
 using ClienteAPI.Model.API;
 using Newtonsoft.Json;
+using System.Windows.Data;
+using System.Runtime.CompilerServices;
+using System.ComponentModel;
 
 namespace ClienteAPI.ViewModel
 {
@@ -34,12 +37,23 @@ namespace ClienteAPI.ViewModel
 
         #region ATTRIBUTES
 
-        public Usuario usuarioActual;
+        //API
+        public APIRest apirest = new();
+
+        //Busqueda
+        public string busqueda = "";
+        public string txtBuscar = "";
+        public Boolean checkboxBuscarPorID = false;
+
+        //Usuario
+        public Usuario? usuarioActual = null;
         public string nombreUsuario = "";
 
-        private Laptop laptopSeleccionada = new Laptop();
+        //Laptop
+        private Laptop? laptopSeleccionada = new();
         private ObservableCollection<Laptop> listaLaptops = new ObservableCollection<Laptop>();
 
+        //Información Laptop
         public string idRegistro = "";
         public string modelo = "";
         public string memoriaRam = "";
@@ -48,18 +62,11 @@ namespace ClienteAPI.ViewModel
         public string almacenamiento = "";
         public string procesador = "";
 
-        public string txtBuscar = "";
-        public Boolean checkboxBuscarPorID = false;
-
-        //Variables
-        public string busqueda = "";
-
         #endregion ATTRIBUTES
 
         #region PROPERTIES
 
-        //Usuario
-
+        //Inicio de Sesión Usuario
         public string NombreUsuario
         {
             get { return this.nombreUsuario; }
@@ -67,7 +74,6 @@ namespace ClienteAPI.ViewModel
         }
 
         //Busqueda
-
         public string TxtBuscar
         {
             get { return this.txtBuscar; }
@@ -81,23 +87,24 @@ namespace ClienteAPI.ViewModel
         }
 
         //Colección de Laptops
-
         public ObservableCollection<Laptop> ListaLaptops
         {
             get { return this.listaLaptops; }
             set { SetValue(ref this.listaLaptops, value); }
         }
 
-        // Laptop (Seleccionada)
-
-
-        public Laptop LaptopSeleccionada
+        // Laptop Seleccionada del DataGrid
+        public Laptop? LaptopSeleccionada
         {
             get { return this.laptopSeleccionada; }
-            set { SetValue(ref this.laptopSeleccionada, value); }
+            set
+            {
+                SetValue(ref this.laptopSeleccionada, value);
+                MostrarInformacionEvent();
+            }
         }
 
-        //Información de la Laptop
+        #region Información Laptop
 
         public string ID
         {
@@ -140,6 +147,8 @@ namespace ClienteAPI.ViewModel
             get { return this.pantalla; }
             set { SetValue(ref this.pantalla, value); }
         }
+
+        #endregion Información Laptop
 
         #endregion PROPERTIES
 
@@ -197,6 +206,25 @@ namespace ClienteAPI.ViewModel
 
         #region METHODS
 
+        #region Eventos
+
+        private void MostrarInformacionEvent()
+        {
+
+            if(LaptopSeleccionada != null)
+            {
+                ID = LaptopSeleccionada.idRegistro;
+                Modelo = LaptopSeleccionada.modelo;
+                CPU = LaptopSeleccionada.procesador;
+                GPU = LaptopSeleccionada.tarjetaVideo;
+                RAM = LaptopSeleccionada.memoriaRam;
+                Almacenamiento = LaptopSeleccionada.almacenamiento;
+            }
+            
+        }
+
+        #endregion
+
         #region Botones
 
         private void Reiniciar()
@@ -212,18 +240,17 @@ namespace ClienteAPI.ViewModel
                 //isNumber = int.TryParse(this.TxtBuscar, out busquedaID);
                 if (this.CheckBoxBuscarPorID == true)
                 {
-                    ObtenerLaptopPorIDAsync(this.TxtBuscar);
+                    _ = ObtenerLaptopPorIDAsync(this.TxtBuscar);
                 }
                 else
                 {
-                    ObtenerLaptopPorModeloAsync(this.TxtBuscar);
+                    _ = ObtenerLaptopPorModeloAsync(this.TxtBuscar);
                 }
             }
             else
             {
                 MessageBox.Show("Especifica primero la busqueda");
             }
-
         }
 
         private void RegistrarLaptop()
@@ -235,20 +262,11 @@ namespace ClienteAPI.ViewModel
 
         private void VerDetalles()
         {
-            if (LaptopSeleccionada == null)
-            {
-                MessageBox.Show("Primero selecciona una laptop de la lista");
-            }
-            else
-            {
-                ID = LaptopSeleccionada.idRegistro;
-                Modelo = LaptopSeleccionada.modelo;
-                CPU = LaptopSeleccionada.procesador;
-                GPU = LaptopSeleccionada.tarjetaVideo;
-                RAM = LaptopSeleccionada.memoriaRam;
-                Almacenamiento = LaptopSeleccionada.almacenamiento;
-            }
+            DetallesLaptop detallesLaptop = new(LaptopSeleccionada);
+            Application.Current.MainWindow.Close();
+            detallesLaptop.Show();
         }
+
 
         private void IniciarSesion()
         {
@@ -282,15 +300,13 @@ namespace ClienteAPI.ViewModel
         {
             ListaLaptops = new ObservableCollection<Laptop>();
 
-            string response = await APIRest.GetLaptops();
-            if (response != "404")
+            List<Laptop>? laptops = await apirest.GetLaptops();
+            if (laptops != null)
             {
-                List<Laptop> laptops = (DeserializarLaptops(response));
                 foreach (Laptop lap in laptops)
                 {
                     ListaLaptops.Add(lap);
                 }
-
             }
             else
             {
@@ -304,12 +320,11 @@ namespace ClienteAPI.ViewModel
 
         private async Task ObtenerLaptopPorIDAsync(string busqueda)
         {
-            string response = await APIRest.GetLaptopPorID(busqueda);
-            if(response != "404")
+            List<Laptop>? laptop = await apirest.GetLaptopPorID(busqueda);
+            if(laptop != null)
             {
-                Laptop laptop = DeserializarLaptop(response);
-                this.ListaLaptops.Clear();
-                this.ListaLaptops.Add(laptop);
+                ListaLaptops.Clear();
+                ListaLaptops.Add(laptop[0]);
             }
             else
             {
@@ -321,11 +336,10 @@ namespace ClienteAPI.ViewModel
 
         private async Task ObtenerLaptopPorModeloAsync(string busqueda)
         {
-            string response = await APIRest.GetLaptopPorModelo(busqueda);
-            if (response != "404")
+            List<Laptop>? laptops = await apirest.GetLaptopPorModelo(busqueda);
+            if (laptops != null)
             {
-                List<Laptop> laptops = DeserializarLaptops(response);
-                this.ListaLaptops.Clear();
+                ListaLaptops.Clear();
                 foreach (Laptop laptop in laptops)
                 {
                     this.ListaLaptops.Add(laptop);
@@ -339,24 +353,7 @@ namespace ClienteAPI.ViewModel
 
         #endregion
 
-        #region Deserialización
-
-        private List<Laptop> DeserializarLaptops(string response)
-        {
-            List<Laptop> laptops = JsonConvert.DeserializeObject<List<Laptop>>(response);
-            return laptops;
-        }
-
-        private Laptop DeserializarLaptop(string response)
-        {
-            Laptop laptop = JsonConvert.DeserializeObject<Laptop>(response);
-            return laptop;
-        }
-
-        #endregion
-
         #endregion METHODS
-
 
     }
 }

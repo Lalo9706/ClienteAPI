@@ -163,7 +163,7 @@
                 <Label Grid.Row="5" Content="Almacenamiento: " VerticalContentAlignment="Center" FontWeight="Bold"/>
                 <Label Grid.Row="6" Content="Pantalla: " VerticalContentAlignment="Center" FontWeight="Bold"/>
 
-                <Label Grid.Row="0" Grid.Column="1" Content="{Binding ID}" VerticalContentAlignment="Center" Name="lblID"/>
+                <Label Grid.Row="0" Grid.Column="1" Content="{Binding ID}" VerticalContentAlignment="Center"/>
                 <Label Grid.Row="1" Grid.Column="1" Content="{Binding Modelo}" VerticalContentAlignment="Center" Name="lblModelo"/>
                 <Label Grid.Row="2" Grid.Column="1" Content="{Binding CPU}" VerticalContentAlignment="Center" Name="lblCPU" />
                 <Label Grid.Row="3" Grid.Column="1" Content="{Binding GPU}" VerticalContentAlignment="Center" Name="lblGPU"/>

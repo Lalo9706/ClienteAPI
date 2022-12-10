@@ -18,88 +18,53 @@ namespace ClienteAPI.Model.API
 {
     public class APIRest
     {
-        public static string URLAPI = "https://web-production-2d2f.up.railway.app";
-        public static string URLGetUsuarioPorCorreo = "/usuario/correo/";
-        public static string URLGetLaptops = "/laptops";
-        public static string URLGetLaptopID = "/laptop/";
-        public static string URLGetLaptopModelo = "/laptopModelo/";
-        public static string URLPostLaptop = "/laptop";
+        private readonly HttpClient client = new();
 
-        public static async Task<string> GetUsuarioPorCorreo(string correo)
+        #region URL
+
+        private static readonly string URLAPI = "https://web-production-2d2f.up.railway.app";
+
+        //GET
+        private static readonly string URLGetUsuarioPorCorreo = "/usuario/correo/";
+        private static readonly string URLGetLaptops = "/laptops";
+        private static readonly string URLGetLaptopID = "/laptop/";
+        private static readonly string URLGetLaptopModelo = "/laptopModelo/";
+
+        //POST
+        private static readonly string URLPostLaptop = "/laptop";
+
+        #endregion URL
+
+        #region METHODS API REST
+
+        //GET
+        public async Task<string> GETJSONAsync(string url)
         {
             try
             {
-                WebRequest onRequest = WebRequest.Create(URLAPI + URLGetUsuarioPorCorreo + correo);
-                using (HttpWebResponse onResponse = (HttpWebResponse)onRequest.GetResponse())
+                string responseJSON = "";
+                using HttpResponseMessage response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
                 {
-                    StreamReader reader = new StreamReader(onResponse.GetResponseStream());
-                    return await reader.ReadToEndAsync();
+                    responseJSON = await response.Content.ReadAsStringAsync();
                 }
+                else
+                {   responseJSON = "404"; }
+                
+                return responseJSON;
             }
             catch (WebException ex)
             {
-                return "404";
+                Console.WriteLine(ex.Message);
+                return "500";
             }
         }
 
-        public static async Task<string> GetLaptops()
+        //POST
+        public async Task<string> POSTJSONAsync(string url, string objectJSON)
         {
-            try
-            {
-                WebRequest onRequest = WebRequest.Create(URLAPI + URLGetLaptops);
-                using (HttpWebResponse onResponse = (HttpWebResponse)onRequest.GetResponse())
-                {
-                    StreamReader reader = new StreamReader(onResponse.GetResponseStream());
-                    return await reader.ReadToEndAsync();
-                }
-            }
-            catch(WebException ex)
-            {
-                return "404";
-            }
-        }
-
-        public static async Task<string> GetLaptopPorID(string id)
-        {
-            try
-            {
-                WebRequest onRequest = WebRequest.Create(URLAPI + URLGetLaptopID + id);
-                using(WebResponse onResponse = onRequest.GetResponse())
-                {
-                    StreamReader reader = new StreamReader(onResponse.GetResponseStream());
-                    return await reader.ReadToEndAsync();
-                }
-            }
-            catch (WebException ex)
-            {
-                return "404";
-            }
-        }
-
-        public static async Task<string> GetLaptopPorModelo(string modelo)
-        {
-            try
-            {
-                WebRequest onRequest = WebRequest.Create(URLAPI + URLGetLaptopModelo + modelo);
-                using (WebResponse onResponse = onRequest.GetResponse())
-                {
-                    StreamReader reader = new StreamReader(onResponse.GetResponseStream());
-                    return await reader.ReadToEndAsync();
-                }
-            }
-            catch (WebException)
-            {
-                return "404";
-            }
-        }
-
-        public static async Task<string> PostLaptop(Laptop laptop)
-        {
-            var client = new HttpClient();
-            var response = JsonConvert.SerializeObject(laptop);
-            HttpContent content = new StringContent(response, Encoding.UTF8, "application/json");
-            var httpResponse = await client.PostAsync(URLAPI+URLPostLaptop, content);
-
+            HttpContent content = new StringContent(objectJSON, Encoding.UTF8, "application/json");
+            var httpResponse = await client.PostAsync(url, content);
             if (httpResponse.IsSuccessStatusCode)
             {
                 return await httpResponse.Content.ReadAsStringAsync();
@@ -109,5 +74,74 @@ namespace ClienteAPI.Model.API
                 return "500";
             }
         }
+
+        #endregion METHODS API REST
+
+        #region METHODS
+
+        #region GET
+        public async Task<Usuario?> GetUsuarioPorCorreo(string correo)
+        {
+            Usuario? usuario = null;
+            string usuarioJSON = await GETJSONAsync(URLAPI + URLGetUsuarioPorCorreo + correo);
+            if (usuarioJSON != "404") { usuario = DeserializarJSONUsuario(usuarioJSON); }
+
+            return usuario;
+        }
+
+        public async Task<List<Laptop>?> GetLaptops()
+        {
+            List<Laptop>? laptops = null;
+            string laptopsJSON = await GETJSONAsync(URLAPI + URLGetLaptops);
+            if (laptopsJSON != "404") { laptops = DeserializarJSONLaptops(laptopsJSON); }
+            
+            return laptops;
+        }
+
+        public async Task<List<Laptop>?> GetLaptopPorID(string id)
+        {
+            List<Laptop>? laptop = null;
+            string laptopJSON = await GETJSONAsync(URLAPI + URLGetLaptopID + id);
+            if (laptopJSON != "404") { laptop = DeserializarJSONLaptops(laptopJSON); }
+
+            return laptop;
+        }
+
+        public async Task<List<Laptop>?> GetLaptopPorModelo(string modelo)
+        {
+            List<Laptop>? laptops = null;
+            string laptopsJSON = await GETJSONAsync(URLAPI + URLGetLaptopModelo + modelo);
+            if (laptopsJSON != "404") { laptops = DeserializarJSONLaptops(laptopsJSON); }
+
+            return laptops;
+        }
+
+        #endregion GET
+
+        #region POST
+        public async Task<string> PostLaptop(Laptop laptop)
+        {
+            string objectJSON = JsonConvert.SerializeObject(laptop); //Serializando Laptop en JSON
+            return await POSTJSONAsync(URLAPI + URLPostLaptop, objectJSON);
+        }
+
+        #endregion POST
+
+        #region DESERIALIZE
+        public Usuario? DeserializarJSONUsuario(string usuarioJSON)
+        {
+            Usuario? usuario = JsonConvert.DeserializeObject<Usuario>(usuarioJSON);
+            return usuario;
+        }
+
+        private List<Laptop>? DeserializarJSONLaptops(string laptopsJSON)
+        {
+            List<Laptop>? laptops = JsonConvert.DeserializeObject<List<Laptop>>(laptopsJSON);
+            return laptops;
+        }
+
+        #endregion DESERIALIZAR
+
+        #endregion METHODS
     }
 }
