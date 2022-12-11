@@ -1,6 +1,6 @@
 ﻿namespace ClienteAPI.Model.POCO
 {
-    public class SDD
+    public class SSD
     {
         public string? IdRegistro { get; set; }
         public string? Marca { get; set; }

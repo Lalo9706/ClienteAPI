@@ -97,13 +97,13 @@ namespace ClienteAPI.ViewModel
                 !this.Pantalla.Equals(""))
             {
                 Laptop laptop = new();
-                laptop.IdRegistro = "r";
-                laptop.Modelo = this.Modelo;
-                laptop.Procesador = this.Procesador;
-                laptop.TarjetaVideo = this.TarjetaVideo;
-                laptop.MemoriaRam = this.MemoriaRam;
-                laptop.Almacenamiento = this.Almacenamiento;
-                laptop.Pantalla = this.Pantalla;
+                laptop.idRegistro = "r";
+                laptop.modelo = this.Modelo;
+                laptop.procesador = this.Procesador;
+                laptop.tarjetaVideo = this.TarjetaVideo;
+                laptop.memoriaRam = this.MemoriaRam;
+                laptop.almacenamiento = this.Almacenamiento;
+                laptop.pantalla = this.Pantalla;
 
                 string response = await apirest.PostLaptop(laptop);
                 if(response != "500")

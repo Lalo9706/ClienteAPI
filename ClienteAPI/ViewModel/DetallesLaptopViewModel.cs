@@ -167,13 +167,13 @@ namespace ClienteAPI.ViewModel
         //InicializarDatos
         private void InicializarDatos()
         {
-            ID = laptopActual.IdRegistro;
-            Modelo = laptopActual.Modelo;
-            Procesador = laptopActual.Procesador;
-            MemoriaRam = laptopActual.MemoriaRam;
-            Almacenamiento = laptopActual.Almacenamiento;
-            TarjetaVideo = laptopActual.TarjetaVideo;
-            Pantalla = laptopActual.Pantalla;
+            ID = laptopActual.idRegistro;
+            Modelo = laptopActual.modelo;
+            Procesador = laptopActual.procesador;
+            MemoriaRam = laptopActual.memoriaRam;
+            Almacenamiento = laptopActual.almacenamiento;
+            TarjetaVideo = laptopActual.tarjetaVideo;
+            Pantalla = laptopActual.pantalla;
 
             if(usuarioActual != null) 
             { 

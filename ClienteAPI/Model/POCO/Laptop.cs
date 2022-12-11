@@ -2,12 +2,12 @@
 {
     public class Laptop
     {
-        public string? IdRegistro { get; set; }
-        public string? Modelo { get; set; }
-        public string? Procesador { get; set; }
-        public string? MemoriaRam { get; set; }
-        public string? Almacenamiento { get; set; }
-        public string? TarjetaVideo { get; set; }
-        public string? Pantalla { get; set; }
+        public string? idRegistro { get; set; }
+        public string? modelo { get; set; }
+        public string? procesador { get; set; }
+        public string? memoriaRam { get; set; }
+        public string? almacenamiento { get; set; }
+        public string? tarjetaVideo { get; set; }
+        public string? pantalla { get; set; }
     }
 }

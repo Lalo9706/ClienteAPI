@@ -65,7 +65,7 @@ namespace ClienteAPI.Model.API
 
         #endregion URL
 
-        #region METHODS API REST
+        #region METHODS API CRUD HTTP
 
         //GET
         public async Task<string> GETJSONAsync(string url)
@@ -91,8 +91,10 @@ namespace ClienteAPI.Model.API
         }
 
         //POST
-        public async Task<string> POSTJSONAsync(string url, string objectJSON)
+        public async Task<string> POSTJSONAsync(string url, object objeto)
         {
+            string objectJSON = JsonConvert.SerializeObject(objeto);
+
             HttpContent content = new StringContent(objectJSON, Encoding.UTF8, "application/json");
             var httpResponse = await client.PostAsync(url, content);
             if (httpResponse.IsSuccessStatusCode)
@@ -142,13 +144,23 @@ namespace ClienteAPI.Model.API
             }
         }
 
-        #endregion METHODS API REST
+        #endregion METHODS API CRUD HTTP
 
-        #region METHODS
+        #region METHODS CRUD
 
         #region GET
 
         //USUARIO
+
+        public async Task<Usuario?> GetUsuario(string id)
+        {
+            Usuario? usuario = null;
+            string usuarioJSON = await GETJSONAsync(URLAPI + URLGetPutDeleteUsuario + id);
+            if (usuarioJSON != "404") { usuario = DeserializarJSONUsuario(usuarioJSON); }
+
+            return usuario;
+        }
+
         public async Task<Usuario?> GetUsuarioPorCorreo(string correo)
         {
             Usuario? usuario = null;
@@ -196,18 +208,119 @@ namespace ClienteAPI.Model.API
             return procesador;
         }
 
+        public async Task<MemoriaRam?> GetMemoriaRam(string id)
+        {
+            MemoriaRam? memoriaRam = null;
+            string memoriaRamJSON = await GETJSONAsync(URLAPI + URLGetPutDeleteMemoriaRam + id);
+            if (memoriaRamJSON != "404") { memoriaRam = DeserializarJSONMemoriaRam(memoriaRamJSON); }
 
+            return memoriaRam;
+        }
+
+        public async Task<Almacenamiento?> GetAlmacenamiento(string id)
+        {
+            Almacenamiento? almacenamiento = null;
+            string almacenamientoJSON = await GETJSONAsync(URLAPI + URLGetPutDeleteAlmacenamiento + id);
+            if (almacenamientoJSON != "404") { almacenamiento = DeserializarJSONAlmacenamiento(almacenamientoJSON); }
+
+            return almacenamiento;
+        }
+
+        public async Task<HDD?> GetHDD(string id)
+        {
+            HDD? hdd = null;
+            string hddJSON = await GETJSONAsync(URLAPI + URLGetPutDeleteHDD + id);
+            if (hddJSON != "404") { hdd = DeserializarJSONHDD(hddJSON); }
+
+            return hdd;
+        }
+
+        public async Task<SSD?> GetSSD(string id)
+        {
+            SSD? ssd = null;
+            string ssdJSON = await GETJSONAsync(URLAPI + URLGetPutDeleteSSD + id);
+            if (ssdJSON != "404") { ssd = DeserializarJSONSSD(ssdJSON); }
+
+            return ssd;
+        }
+
+        public async Task<TarjetaVideo?> GetTarjetaVideo(string id)
+        {
+            TarjetaVideo? tarjetaVideo = null;
+            string tarjetaVideoJSON = await GETJSONAsync(URLAPI + URLGetPutDeleteTarjetaVideo + id);
+            if (tarjetaVideoJSON != "404") { tarjetaVideo = DeserializarJSONTarjetaVideo(tarjetaVideoJSON); }
+
+            return tarjetaVideo;
+        }
+
+        public async Task<Pantalla?> GetPantalla(string id)
+        {
+            Pantalla? pantalla = null;
+            string pantallaJSON = await GETJSONAsync(URLAPI + URLGetPutDeletePantalla + id);
+            if (pantallaJSON != "404") { pantalla = DeserializarJSONPantalla(pantallaJSON); }
+
+            return pantalla;
+        }
 
         #endregion GET
 
         #region POST
         public async Task<string> PostLaptop(Laptop laptop)
         {
-            string objectJSON = JsonConvert.SerializeObject(laptop); //Serializando Laptop en JSON
-            return await POSTJSONAsync(URLAPI + URLPostLaptop, objectJSON);
+            return await POSTJSONAsync(URLAPI + URLPostLaptop, laptop);
+        }
+
+        public async Task<string> PostUsuario(Usuario usuario)
+        {
+            return await POSTJSONAsync(URLAPI + URLPostUsuario, usuario);
+        }
+
+        public async Task<string> PostProcesador(Procesador procesador)
+        {
+            return await POSTJSONAsync(URLAPI + URLPostProcesador, procesador);
+        }
+
+        public async Task<string> PostMemoriaRam(MemoriaRam memoriaRam)
+        {
+            return await POSTJSONAsync(URLAPI + URLPostMemoriaRam, memoriaRam);
+        }
+
+        public async Task<string> PostAlmacenamiento(Almacenamiento almacenamiento)
+        {
+            return await POSTJSONAsync(URLAPI + URLPostAlmacenamiento, almacenamiento);
+        }
+
+        public async Task<string> PostHDD(HDD hdd)
+        {
+            return await POSTJSONAsync(URLAPI + URLPostHDD, hdd);
+        }
+
+        public async Task<string> PostSSD(SSD ssd)
+        {
+            return await POSTJSONAsync(URLAPI + URLPostSSD, ssd);
+        }
+
+        public async Task<string> PostTarjetaVideo(TarjetaVideo tarjetaVideo)
+        {
+            return await POSTJSONAsync(URLAPI + URLPostTarjetaVideo, tarjetaVideo);
+        }
+
+        public async Task<string> PostPantalla(Pantalla pantalla)
+        {
+            return await POSTJSONAsync(URLAPI + URLPostPantalla, pantalla);
         }
 
         #endregion POST
+
+        #region PUT
+
+        #endregion PUT
+
+        #region DELETE
+
+        #endregion DELETE
+
+        #endregion METHODS
 
         #region DESERIALIZE
         private Usuario? DeserializarJSONUsuario(string usuarioJSON)
@@ -222,9 +335,9 @@ namespace ClienteAPI.Model.API
             return laptops;
         }
 
-        private Laptop? DeserializarJSONLaptop(string laptopsJSON)
+        private Laptop? DeserializarJSONLaptop(string laptopJSON)
         {
-            Laptop? laptop = JsonConvert.DeserializeObject<Laptop>(laptopsJSON);
+            Laptop? laptop = JsonConvert.DeserializeObject<Laptop>(laptopJSON);
             return laptop;
         }
 
@@ -238,8 +351,31 @@ namespace ClienteAPI.Model.API
             return JsonConvert.DeserializeObject<MemoriaRam>(memoriaRamJSON);
         }
 
-        #endregion DESERIALIZAR
+        private Almacenamiento? DeserializarJSONAlmacenamiento(string almacenamientoJSON)
+        {
+            return JsonConvert.DeserializeObject<Almacenamiento>(almacenamientoJSON);
+        }
 
-        #endregion METHODS
+        private HDD? DeserializarJSONHDD(string hddJSON)
+        {
+            return JsonConvert.DeserializeObject<HDD>(hddJSON);
+        }
+
+        private SSD? DeserializarJSONSSD(string ssdJSON)
+        {
+            return JsonConvert.DeserializeObject<SSD>(ssdJSON);
+        }
+
+        private TarjetaVideo? DeserializarJSONTarjetaVideo(string tarjetaVideoJSON)
+        {
+            return JsonConvert.DeserializeObject<TarjetaVideo>(tarjetaVideoJSON);
+        }
+
+        private Pantalla? DeserializarJSONPantalla(string pantallaJSON)
+        {
+            return JsonConvert.DeserializeObject<Pantalla>(pantallaJSON);
+        }
+
+        #endregion DESERIALIZAR
     }
 }

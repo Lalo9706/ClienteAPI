@@ -221,13 +221,13 @@ namespace ClienteAPI.ViewModel
         {
             if(LaptopSeleccionada != null)
             {
-                ID = LaptopSeleccionada.IdRegistro;
-                Modelo = LaptopSeleccionada.Modelo;
-                CPU = LaptopSeleccionada.Procesador;
-                GPU = LaptopSeleccionada.TarjetaVideo;
-                RAM = LaptopSeleccionada.MemoriaRam;
-                Almacenamiento = LaptopSeleccionada.Almacenamiento;
-                Pantalla = LaptopSeleccionada.Pantalla;
+                ID = LaptopSeleccionada.idRegistro;
+                Modelo = LaptopSeleccionada.modelo;
+                CPU = LaptopSeleccionada.procesador;
+                GPU = LaptopSeleccionada.tarjetaVideo;
+                RAM = LaptopSeleccionada.memoriaRam;
+                Almacenamiento = LaptopSeleccionada.almacenamiento;
+                Pantalla = LaptopSeleccionada.pantalla;
             }      
         }
 
