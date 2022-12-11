@@ -11,6 +11,7 @@ namespace ClienteAPI.View
     {
         public InicioUsuario(Usuario usuario)
         {
+            InitializeComponent();
             DataContext = new InicioUsuarioViewModel(usuario);
         }
     }

@@ -26,11 +26,11 @@ namespace ClienteAPI.ViewModel
             ObtenerLaptopsAsync();
         }
 
-        public InicioUsuarioViewModel(Usuario usuario)
+        public InicioUsuarioViewModel(Usuario? usuario)
         {
             ObtenerLaptopsAsync();
             this.usuarioActual = usuario;
-            this.NombreUsuario = usuarioActual.NombreUsuario;
+            this.NombreUsuario = usuarioActual?.NombreUsuario;
         }
 
         #endregion CONSTRUCTOR
@@ -41,13 +41,12 @@ namespace ClienteAPI.ViewModel
         public APIRest apirest = new();
 
         //Busqueda
-        public string busqueda = "";
         public string txtBuscar = "";
         public Boolean checkboxBuscarPorID = false;
 
         //Usuario
         public Usuario? usuarioActual = null;
-        public string nombreUsuario = "";
+        public string? nombreUsuario = "";
 
         //Laptop
         private Laptop? laptopSeleccionada = null;
@@ -69,10 +68,16 @@ namespace ClienteAPI.ViewModel
         #region General
 
         //Inicio de Sesión Usuario
-        public string NombreUsuario
+        public string? NombreUsuario
         {
             get { return this.nombreUsuario; }
             set { SetValue(ref this.nombreUsuario, value); }
+        }
+
+        public Usuario? UsuarioActual
+        {
+            get { return this.usuarioActual; }
+            set { SetValue(ref this.usuarioActual, value); }
         }
 
         //Busqueda
@@ -326,18 +331,16 @@ namespace ClienteAPI.ViewModel
 
         private async Task ObtenerLaptopPorIDAsync(string busqueda)
         {
-            List<Laptop>? laptop = await apirest.GetLaptopPorID(busqueda);
+            Laptop? laptop = await apirest.GetLaptopPorID(busqueda);
             if(laptop != null)
             {
                 ListaLaptops.Clear();
-                ListaLaptops.Add(laptop[0]);
+                ListaLaptops.Add(laptop);
             }
             else
             {
                 MessageBox.Show("No se encontró el ID de la laptop", "Aviso");
             }
-
-
         }
 
         private async Task ObtenerLaptopPorModeloAsync(string busqueda)
@@ -358,19 +361,6 @@ namespace ClienteAPI.ViewModel
         }
 
         #endregion
-
-        #region Manejador de Eventos (EventHandler)
-
-        /*
-        public void OnWindowClosing(object? sender, CancelEventArgs? e)
-        {
-            Application.Current.MainWindow.Hide();
-            Application.Current.MainWindow.Close();
-            //MessageBoxResult r = MessageBox.Show("¿Quieres salir de la aplicacion?","Salir",MessageBoxButton.YesNo);
-            //if(r == MessageBoxResult.Yes) {  }
-        }*/
-
-        #endregion Manejador de Eventos (EventHandler)
 
         #endregion METHODS
 

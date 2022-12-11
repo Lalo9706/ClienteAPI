@@ -13,7 +13,6 @@ namespace ClienteAPI.View
             InitializeComponent();
             IniciarSesionViewModel iniciarSesionViewModel = new();
             DataContext = iniciarSesionViewModel;
-            Closing += iniciarSesionViewModel.OnWindowClosing;
         }
     }
 }
