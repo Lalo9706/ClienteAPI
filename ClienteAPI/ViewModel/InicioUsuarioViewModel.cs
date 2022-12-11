@@ -30,7 +30,7 @@ namespace ClienteAPI.ViewModel
         {
             ObtenerLaptopsAsync();
             this.usuarioActual = usuario;
-            this.NombreUsuario = usuarioActual.nombreUsuario;
+            this.NombreUsuario = usuarioActual.NombreUsuario;
         }
 
         #endregion CONSTRUCTOR
@@ -50,21 +50,23 @@ namespace ClienteAPI.ViewModel
         public string nombreUsuario = "";
 
         //Laptop
-        private Laptop? laptopSeleccionada = new();
+        private Laptop? laptopSeleccionada = null;
         private ObservableCollection<Laptop> listaLaptops = new ObservableCollection<Laptop>();
 
         //Información Laptop
-        public string idRegistro = "";
-        public string modelo = "";
-        public string memoriaRam = "";
-        public string tarjetaVideo = "";
-        public string pantalla = "";
-        public string almacenamiento = "";
-        public string procesador = "";
+        public string? idRegistro = "";
+        public string? modelo = "";
+        public string? memoriaRam = "";
+        public string? tarjetaVideo = "";
+        public string? almacenamiento = "";
+        public string? procesador = "";
+        public string? pantalla = "";
 
         #endregion ATTRIBUTES
 
         #region PROPERTIES
+
+        #region General
 
         //Inicio de Sesión Usuario
         public string NombreUsuario
@@ -104,45 +106,47 @@ namespace ClienteAPI.ViewModel
             }
         }
 
+        #endregion General
+
         #region Información Laptop
 
-        public string ID
+        public string? ID
         {
             get { return this.idRegistro; }
             set { SetValue(ref this.idRegistro, value); }
         }
 
-        public string Modelo
+        public string? Modelo
         {
             get { return this.modelo; }
             set { SetValue(ref this.modelo, value); }
         }
 
-        public string CPU
+        public string? CPU
         {
             get { return this.procesador; }
             set { SetValue(ref this.procesador, value); }
         }
 
-        public string GPU
+        public string? GPU
         {
             get { return this.tarjetaVideo; }
             set { SetValue(ref this.tarjetaVideo, value); }
         }
 
-        public string RAM
+        public string? RAM
         {
             get { return this.memoriaRam; }
             set { SetValue(ref this.memoriaRam, value); }
         }
 
-        public string Almacenamiento
+        public string? Almacenamiento
         {
             get { return this.almacenamiento; }
             set { SetValue(ref this.almacenamiento, value); }
         }
 
-        public string Pantalla
+        public string? Pantalla
         {
             get { return this.pantalla; }
             set { SetValue(ref this.pantalla, value); }
@@ -210,17 +214,16 @@ namespace ClienteAPI.ViewModel
 
         private void MostrarInformacionEvent()
         {
-
             if(LaptopSeleccionada != null)
             {
-                ID = LaptopSeleccionada.idRegistro;
-                Modelo = LaptopSeleccionada.modelo;
-                CPU = LaptopSeleccionada.procesador;
-                GPU = LaptopSeleccionada.tarjetaVideo;
-                RAM = LaptopSeleccionada.memoriaRam;
-                Almacenamiento = LaptopSeleccionada.almacenamiento;
-            }
-            
+                ID = LaptopSeleccionada.IdRegistro;
+                Modelo = LaptopSeleccionada.Modelo;
+                CPU = LaptopSeleccionada.Procesador;
+                GPU = LaptopSeleccionada.TarjetaVideo;
+                RAM = LaptopSeleccionada.MemoriaRam;
+                Almacenamiento = LaptopSeleccionada.Almacenamiento;
+                Pantalla = LaptopSeleccionada.Pantalla;
+            }      
         }
 
         #endregion
@@ -237,7 +240,6 @@ namespace ClienteAPI.ViewModel
         {
             if (TxtBuscar != "")
             {
-                //isNumber = int.TryParse(this.TxtBuscar, out busquedaID);
                 if (this.CheckBoxBuscarPorID == true)
                 {
                     _ = ObtenerLaptopPorIDAsync(this.TxtBuscar);
@@ -255,24 +257,28 @@ namespace ClienteAPI.ViewModel
 
         private void RegistrarLaptop()
         {
-            RegistrarLaptop registrarLaptop = new RegistrarLaptop();
-            Application.Current.MainWindow.Close();
-            registrarLaptop.Show();
+            Application.Current.MainWindow.Hide();
+            Application.Current.MainWindow = new RegistrarLaptop();
+            Application.Current.MainWindow.Show();
         }
 
         private void VerDetalles()
         {
-            DetallesLaptop detallesLaptop = new(LaptopSeleccionada);
-            Application.Current.MainWindow.Close();
-            detallesLaptop.Show();
+            if(LaptopSeleccionada != null)
+            {
+                Application.Current.MainWindow.Hide();
+                Application.Current.MainWindow = new DetallesLaptop(LaptopSeleccionada, usuarioActual);
+                Application.Current.MainWindow.Show();
+            }
+            else { MessageBox.Show("Primero Selecciona una Laptop de la lista", "Aviso"); }
+            
         }
-
 
         private void IniciarSesion()
         {
-            IniciarSesion ventanaIniciarSesión = new();
-            Application.Current.MainWindow.Close();
-            ventanaIniciarSesión.Show();
+            Application.Current.MainWindow.Hide();
+            Application.Current.MainWindow = new IniciarSesion();
+            Application.Current.MainWindow.Show();
         }
 
         private void Registrarse()
@@ -287,9 +293,9 @@ namespace ClienteAPI.ViewModel
 
         private void CerrarSesion()
         {
-            Inicio inicio = new Inicio();
-            Application.Current.MainWindow.Close();
-            inicio.Show();
+            Application.Current.MainWindow.Hide();
+            Application.Current.MainWindow = new Inicio();
+            Application.Current.MainWindow.Show();
         }
 
         #endregion
@@ -352,6 +358,19 @@ namespace ClienteAPI.ViewModel
         }
 
         #endregion
+
+        #region Manejador de Eventos (EventHandler)
+
+        /*
+        public void OnWindowClosing(object? sender, CancelEventArgs? e)
+        {
+            Application.Current.MainWindow.Hide();
+            Application.Current.MainWindow.Close();
+            //MessageBoxResult r = MessageBox.Show("¿Quieres salir de la aplicacion?","Salir",MessageBoxButton.YesNo);
+            //if(r == MessageBoxResult.Yes) {  }
+        }*/
+
+        #endregion Manejador de Eventos (EventHandler)
 
         #endregion METHODS
 

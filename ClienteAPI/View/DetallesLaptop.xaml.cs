@@ -21,10 +21,10 @@ namespace ClienteAPI.View
     /// </summary>
     public partial class DetallesLaptop : Window
     {
-        public DetallesLaptop(Laptop laptop)
+        public DetallesLaptop(Laptop laptop, Usuario? usuario)
         {
             InitializeComponent();
-            DataContext = new DetallesLaptopViewModel(laptop);
+            DataContext = new DetallesLaptopViewModel(laptop, usuario);
         }
     }
 }

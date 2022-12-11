@@ -3,13 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ClienteAPI.View"
-        xmlns:viewmodel="clr-namespace:ClienteAPI.ViewModel"
-        d:DataContext="{d:DesignInstance Type=viewmodel:InicioUsuarioViewModel}"
-        mc:Ignorable="d"
+        xmlns:viewmodel="clr-namespace:ClienteAPI.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:InicioUsuarioViewModel}"
         Title="Inicio" Height="575" Width="925"
-        WindowStartupLocation="CenterScreen"
-        >
+        WindowStartupLocation="CenterScreen">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
@@ -103,7 +100,7 @@
                 <DataGridTemplateColumn Header="ID" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding idRegistro}" />
+                            <TextBlock Text="{Binding IdRegistro}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -111,7 +108,7 @@
                 <DataGridTemplateColumn Header="Modelo" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding modelo}" />
+                            <TextBlock Text="{Binding Modelo}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -161,8 +158,6 @@
                     <ColumnDefinition Width="107*"/>
                     <ColumnDefinition Width="133*"/>
                 </Grid.ColumnDefinitions>
-
-
 
                 <Label Grid.Row="0" Content="ID de la Laptop:" VerticalContentAlignment="Center" FontWeight="Bold"/>
                 <Label Grid.Row="1" Content="Modelo: " VerticalContentAlignment="Center" FontWeight="Bold"/>

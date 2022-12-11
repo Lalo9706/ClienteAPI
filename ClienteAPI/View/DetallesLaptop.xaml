@@ -5,8 +5,67 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClienteAPI.View"
         mc:Ignorable="d"
-        Title="DetallesLaptop" Height="450" Width="800">
+        WindowStartupLocation="CenterScreen"
+        Title="DetallesLaptop" Height="600" Width="500">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+            <RowDefinition Height="110"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Column="0" Margin="20,0"
+            Content="Detalles de Laptop" FontSize="30"
+            VerticalAlignment="Center" HorizontalAlignment="Left"
+        />
+        <Rectangle Grid.Row="1" StrokeThickness="2" Stroke="Black" Margin="20,0" />
+
+        <Rectangle Grid.Row="2" StrokeThickness="2" Stroke="Black" Margin="20" />
+        <Grid Grid.Row="1" Margin="40,15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Content="ID Laptop:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="1" Content="Modelo:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="2" Content="Procesador:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="3" Content="Memoria RAM:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="4" Content="Almacenamiento:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="5" Content="Tarjeta Grafica:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="6" Content="Pantalla:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+
+            <Label Grid.Row="0" Grid.Column="1" Content="{Binding ID}" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="1" Grid.Column="1" Content="{Binding Modelo}" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Button Grid.Row="2" Grid.Column="1" Content="{Binding Procesador}" Command="{Binding ClickProcesador}" Background="Transparent" BorderBrush="Transparent" Foreground="Blue" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left"/>
+            <Button Grid.Row="3" Grid.Column="1" Content="{Binding MemoriaRam}" Command="{Binding ClickMemoriaRam}" Background="Transparent" BorderBrush="Transparent" Foreground="Blue" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left"/>
+            <Button Grid.Row="4" Grid.Column="1" Content="{Binding Almacenamiento}" Command="{Binding ClickAlmacenamiento}" Background="Transparent" BorderBrush="Transparent" Foreground="Blue" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left"/>
+            <Button Grid.Row="5" Grid.Column="1" Content="{Binding TarjetaVideo}" Command="{Binding ClickTarjetaVideo}" Background="Transparent" BorderBrush="Transparent" Foreground="Blue" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left"/>
+            <Button Grid.Row="6" Grid.Column="1" Content="{Binding Pantalla}" Command="{Binding ClickPantalla}" Background="Transparent" BorderBrush="Transparent" Foreground="Blue" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left"/>
+
+        </Grid>
+
+        <Label Grid.Row="2" Content="Opciones" FontSize="15" FontWeight="SemiBold" Background="White" Margin="32,2,382,78" VerticalContentAlignment="Center" />
+        <Grid Grid.Row="2" Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Margin="30,15" Content="Modificar" FontSize="15" Command="{Binding ClickModificar}" IsEnabled="{Binding IsBtnModificarEnabled}"/>
+            <Button Grid.Column="1" Margin="30,15" Content="Eliminar" FontSize="15" Command="{Binding ClickEliminar}" IsEnabled="{Binding IsBtnEliminarEnabled}" Background="Red"/>
+        </Grid>
+
+        <Button Grid.Row="3" Content="Cerrar" FontSize="15" Margin="20,0,360,20" Command="{Binding ClickCerrar}"/>
+
     </Grid>
 </Window>

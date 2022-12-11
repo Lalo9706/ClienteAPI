@@ -9,17 +9,9 @@ namespace ClienteAPI.View
     /// </summary>
     public partial class InicioUsuario : Window
     {
-        public InicioUsuario()
-        {
-            InitializeComponent();
-            DataContext = new InicioUsuarioViewModel();
-        }
-
         public InicioUsuario(Usuario usuario)
         {
-            InitializeComponent();
             DataContext = new InicioUsuarioViewModel(usuario);
-            
         }
     }
 }

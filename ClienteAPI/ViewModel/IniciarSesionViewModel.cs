@@ -4,6 +4,7 @@ using ClienteAPI.View;
 using CommunityToolkit.Mvvm.Input;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -27,7 +28,7 @@ namespace ClienteAPI.ViewModel
 
         #region ATTRIBUTES
 
-        public string correo = "hector.morelos.607@gmail.com";
+        public string correo = "h_david_mr@hotmail.com";
         public string contraseña = "HALOcea205";
 
         public APIRest apirest = new();
@@ -72,10 +73,7 @@ namespace ClienteAPI.ViewModel
 
         #region METHODS
 
-        private void IniciarSesion()
-        {
-            IniciarSesionAsync();
-        }
+        private void IniciarSesion() { IniciarSesionAsync(); }
 
         private async void IniciarSesionAsync()
         {
@@ -89,17 +87,12 @@ namespace ClienteAPI.ViewModel
 
                 if(usuario != null)
                 {
-                    //Usuario usuario1 = DeserializarUsuario(respuesta);
-
-
-                    //Validación Usuario 1
-                    if (_contraseña == usuario.contrasena)
+                    if (_contraseña == usuario.Contrasena)
                     {
                         MessageBox.Show("Inicio de Sesión Exitoso", "Aviso");
-                        InicioUsuario inicioUsuario = new(usuario);
-                        Application.Current.MainWindow.Close();
-                        System.Threading.Thread.Sleep(1000);
-                        inicioUsuario.Show();
+                        Application.Current.MainWindow.Hide();
+                        Application.Current.MainWindow = new InicioUsuario(usuario);
+                        Application.Current.MainWindow.Show();                        
                     }
                     else
                     {
@@ -108,19 +101,13 @@ namespace ClienteAPI.ViewModel
                 }
                 else
                 {
-                    MessageBox.Show("No existe un usuario con es correo electronico","Alerta");
+                    MessageBox.Show("No existe un usuario con ese correo electronico","Alerta");
                 }
             }
             else
             {
                 MessageBox.Show("Hay campos vacios", "Alerta");
             }
-        }
-
-        public Usuario? DeserializarUsuario(string respuesta)
-        {
-            Usuario? user = JsonConvert.DeserializeObject<Usuario>(respuesta);
-            return user;
         }
 
         private void Registrarse()
@@ -130,9 +117,15 @@ namespace ClienteAPI.ViewModel
 
         private void Volver()
         {
-            Inicio ventanaInicio = new();
-            Application.Current.MainWindow.Close();
-            ventanaInicio.Show();
+            Application.Current.MainWindow.Hide();
+            Application.Current.MainWindow = new Inicio();
+            Application.Current.MainWindow.Show();            
+        }
+
+        public void OnWindowClosing(object? sender, CancelEventArgs? e)
+        {
+            MessageBoxResult r = MessageBox.Show("¿Quieres salir de la aplicacion?", "Salir", MessageBoxButton.YesNo);
+            if (r == MessageBoxResult.Yes) { Application.Current.MainWindow.Close(); }
         }
 
         #endregion
