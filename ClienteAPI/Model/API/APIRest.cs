@@ -343,6 +343,11 @@ namespace ClienteAPI.Model.API
 
         #region DELETE
 
+        public async Task<string> DeleteLaptop(string id)
+        {
+            return await DELETEJSONAsync(URLAPI + URLGetPutDeleteLaptop + id);
+        }
+
         #endregion DELETE
 
         #endregion METHODS

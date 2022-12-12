@@ -251,9 +251,10 @@ namespace ClienteAPI.ViewModel
                     MessageBox.Show("No se encontró la memoria RAM ¿Desea registrarla?", "Aviso", MessageBoxButton.YesNo);
                     if (respuesta == MessageBoxResult.Yes)
                     {
+                        /*
                         Application.Current.MainWindow.Hide();
-                        Application.Current.MainWindow = new FormularioProcesador(laptopActual, usuarioActual);
-                        Application.Current.MainWindow.Show();
+                        Application.Current.MainWindow = new FormularioRAM(laptopActual, usuarioActual);
+                        Application.Current.MainWindow.Show();*/
                     }
                 }
                 else { MessageBox.Show("No se encontró la RAM\nInicie sesión para poder registrarla", "Aviso"); }
@@ -300,27 +301,90 @@ namespace ClienteAPI.ViewModel
                 if (usuarioActual != null)
                 {
                     MessageBoxResult respuesta =
-                    MessageBox.Show("No se encontró la memoria RAM ¿Desea registrarla?", "Aviso", MessageBoxButton.YesNo);
+                    MessageBox.Show("No se encontró el Almacenamiento ¿Desea registrarlo?", "Aviso", MessageBoxButton.YesNo);
                     if (respuesta == MessageBoxResult.Yes)
                     {
+                        /*
                         Application.Current.MainWindow.Hide();
-                        Application.Current.MainWindow = new FormularioProcesador(laptopActual, usuarioActual);
-                        Application.Current.MainWindow.Show();
+                        Application.Current.MainWindow = new FormularioAlmacenamiento(laptopActual, usuarioActual);
+                        Application.Current.MainWindow.Show();*/
                     }
                 }
-                else { MessageBox.Show("No se encontró la RAM\nInicie sesión para poder registrarla", "Aviso"); }
+                else { MessageBox.Show("No se encontró el AlmacenamientoM\nInicie sesión para poder registrarlo", "Aviso"); }
 
             }
         }
 
-        public static void VerTarjetaVideo()
+        public async void VerTarjetaVideo()
         {
-            MessageBox.Show("Ver GPU", "Aviso");
+            TarjetaVideo? tarjetaVideo = new();
+            if (laptopActual.idRegistro != null) { tarjetaVideo = await apirest.GetTarjetaVideo(laptopActual.idRegistro); }
+            if (tarjetaVideo != null)
+            {
+                Application.Current.MainWindow.Hide();
+                if (usuarioActual != null)
+                {
+                    Application.Current.MainWindow = new DetallesTarjetaVideo(tarjetaVideo, laptopActual, usuarioActual);
+                }
+                else
+                {
+                    Application.Current.MainWindow = new DetallesTarjetaVideo(tarjetaVideo, laptopActual);
+                }
+                Application.Current.MainWindow.Show();
+            }
+            else
+            {
+                if (usuarioActual != null)
+                {
+                    MessageBoxResult respuesta =
+                    MessageBox.Show("No se encontró la memoria Tarjeta de Video ¿Desea registrarla?", "Aviso", MessageBoxButton.YesNo);
+                    if (respuesta == MessageBoxResult.Yes)
+                    {
+                        /*
+                        Application.Current.MainWindow.Hide();
+                        Application.Current.MainWindow = new FormularioTarjetaVideo(laptopActual, usuarioActual);
+                        Application.Current.MainWindow.Show();*/
+                    }
+                }
+                else { MessageBox.Show("No se encontró la Tarjeta de Video\nInicie sesión para poder registrarla", "Aviso"); }
+
+            }
         }
 
-        public static void VerPantalla()
+        public async void VerPantalla()
         {
-            MessageBox.Show("Ver Pantalla", "Aviso");
+            Pantalla? pantalla = new();
+            if (laptopActual.idRegistro != null) { pantalla = await apirest.GetPantalla(laptopActual.idRegistro); }
+            if (pantalla != null)
+            {
+                Application.Current.MainWindow.Hide();
+                if (usuarioActual != null)
+                {
+                    Application.Current.MainWindow = new DetallesPantalla(pantalla, laptopActual, usuarioActual);
+                }
+                else
+                {
+                    Application.Current.MainWindow = new DetallesPantalla(pantalla, laptopActual);
+                }
+                Application.Current.MainWindow.Show();
+            }
+            else
+            {
+                if (usuarioActual != null)
+                {
+                    MessageBoxResult respuesta =
+                    MessageBox.Show("No se encontró la Pantalla ¿Desea registrarla?", "Aviso", MessageBoxButton.YesNo);
+                    if (respuesta == MessageBoxResult.Yes)
+                    {
+                        /*
+                        Application.Current.MainWindow.Hide();
+                        Application.Current.MainWindow = new FormularioRAM(laptopActual, usuarioActual);
+                        Application.Current.MainWindow.Show();*/
+                    }
+                }
+                else { MessageBox.Show("No se encontró la Pantalla\nInicie sesión para poder registrarla", "Aviso"); }
+
+            }
         }
 
         public static void Modificar()
@@ -328,9 +392,27 @@ namespace ClienteAPI.ViewModel
             MessageBox.Show("Modificar Laptop", "Aviso");
         }
 
-        public static void Eliminar()
+        public async void Eliminar()
         {
-            MessageBox.Show("Eliminar Laptop", "Aviso");
+            MessageBoxResult respuesta =
+                   MessageBox.Show("Esta a punto de eliminar la laptop actual\n¿Continuar?", "Eliminar Laptop", MessageBoxButton.YesNo);
+            if (respuesta == MessageBoxResult.Yes)
+            {
+                string respuestaDelete = await apirest.DeleteLaptop(laptopActual.idRegistro);
+                if(respuestaDelete != "500")
+                {
+                    if(respuestaDelete != "404")
+                    {
+                        MessageBox.Show("Se eliminó la laptop exitosamente", "Aviso");
+                        Cerrar();
+                    }
+                    else { MessageBox.Show("No se encontró la laptop", "Error"); }
+                }
+                else if(respuestaDelete == "500")
+                {
+                    MessageBox.Show("No se pudó eliminar la laptop", "Error");
+                }
+            }
         }
 
         public void Cerrar()

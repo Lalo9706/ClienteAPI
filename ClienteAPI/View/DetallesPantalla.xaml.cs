@@ -17,20 +17,20 @@ using System.Windows.Shapes;
 namespace ClienteAPI.View
 {
     /// <summary>
-    /// Lógica de interacción para DetallesTarjetaVideo.xaml
+    /// Lógica de interacción para DetallesPantalla.xaml
     /// </summary>
-    public partial class DetallesTarjetaVideo : Window
+    public partial class DetallesPantalla : Window
     {
-        public DetallesTarjetaVideo(TarjetaVideo gpu, Laptop laptop)
+        public DetallesPantalla(Pantalla pantalla, Laptop laptop)
         {
             InitializeComponent();
-            DataContext = new DetallesTarjetaVideoViewModel(gpu, laptop);
+            DataContext = new DetallesPantallaViewModel(pantalla, laptop);
         }
 
-        public DetallesTarjetaVideo(TarjetaVideo gpu, Laptop laptop, Usuario usuario)
+        public DetallesPantalla(Pantalla pantalla, Laptop laptop, Usuario usuario)
         {
             InitializeComponent();
-            DataContext = new DetallesTarjetaVideoViewModel(gpu, laptop, usuario);
+            DataContext = new DetallesPantallaViewModel(pantalla, laptop, usuario);
         }
     }
 }
