@@ -20,12 +20,21 @@ namespace ClienteAPI.ViewModel
             this.usuarioActual = usuario;
         }
 
+        public FormularioLaptopViewModel(Usuario usuario, Laptop laptop)
+        {
+            this.usuarioActual = usuario;
+            this.laptopEnEdicion = laptop;
+        }
+
         #endregion
 
         #region ATTRIBUTES
 
         //API
         public APIRest apirest = new APIRest();
+
+        //Edición
+        public Laptop? laptopEnEdicion = null;
 
         //Datos de la laptop
         public string modelo = "";

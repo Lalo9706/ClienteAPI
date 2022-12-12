@@ -261,9 +261,56 @@ namespace ClienteAPI.ViewModel
             }
         }
 
-        public static void VerAlmacenamiento()
+        public async void VerAlmacenamiento()
         {
-            MessageBox.Show("Ver Almacenamiento", "Aviso");
+            Almacenamiento? almacenamiento = new();
+            if (laptopActual.idRegistro != null) { almacenamiento = await apirest.GetAlmacenamiento(laptopActual.idRegistro); }
+            if (almacenamiento != null)
+            {
+                Application.Current.MainWindow.Hide();
+                if (almacenamiento.tipoAlmacenamiento == "HDD")
+                {
+                    HDD? hdd = await apirest.GetHDD(laptopActual.idRegistro);
+                    if (usuarioActual != null)
+                    {
+                        Application.Current.MainWindow = new DetallesHDD(hdd, laptopActual, usuarioActual);
+                    }
+                    else
+                    {
+                        Application.Current.MainWindow = new DetallesHDD(hdd, laptopActual);
+                    }
+                }
+                else
+                {
+                    SSD? ssd = await apirest.GetSSD(laptopActual.idRegistro);
+                    if (usuarioActual != null)
+                    {
+                        Application.Current.MainWindow = new DetallesSSD(ssd, laptopActual, usuarioActual);
+                    }
+                    else
+                    {
+                        Application.Current.MainWindow = new DetallesSSD(ssd, laptopActual);
+                    }
+                }                
+                
+                Application.Current.MainWindow.Show();
+            }
+            else
+            {
+                if (usuarioActual != null)
+                {
+                    MessageBoxResult respuesta =
+                    MessageBox.Show("No se encontró la memoria RAM ¿Desea registrarla?", "Aviso", MessageBoxButton.YesNo);
+                    if (respuesta == MessageBoxResult.Yes)
+                    {
+                        Application.Current.MainWindow.Hide();
+                        Application.Current.MainWindow = new FormularioProcesador(laptopActual, usuarioActual);
+                        Application.Current.MainWindow.Show();
+                    }
+                }
+                else { MessageBox.Show("No se encontró la RAM\nInicie sesión para poder registrarla", "Aviso"); }
+
+            }
         }
 
         public static void VerTarjetaVideo()

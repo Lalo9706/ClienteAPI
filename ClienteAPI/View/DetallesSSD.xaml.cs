@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ClienteAPI.Model.POCO;
+using ClienteAPI.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,16 @@ namespace ClienteAPI.View
     /// </summary>
     public partial class DetallesSSD : Window
     {
-        public DetallesSSD()
+        public DetallesSSD(SSD almacenamiento, Laptop laptop)
         {
             InitializeComponent();
+            DataContext = new DetallesSSDViewModel(almacenamiento, laptop);
+        }
+
+        public DetallesSSD(SSD almacenamiento, Laptop laptop, Usuario usuario)
+        {
+            InitializeComponent();
+            DataContext = new DetallesSSDViewModel(almacenamiento, laptop, usuario);
         }
     }
 }

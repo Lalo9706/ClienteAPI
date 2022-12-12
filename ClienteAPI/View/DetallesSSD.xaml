@@ -6,8 +6,75 @@
         xmlns:local="clr-namespace:ClienteAPI.View"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="DetallesSSD" Height="450" Width="800">
+        Title="DetallesSSD" Height="700" Width="500">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+            <RowDefinition Height="110"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Column="0" Margin="20,0"
+            Content="Detalles del SSD" FontSize="30"
+            VerticalAlignment="Center" HorizontalAlignment="Left"
+        />
+        <Rectangle Grid.Row="1" StrokeThickness="2" Stroke="Black" Margin="20,0" />
+
+        <Rectangle Grid.Row="2" StrokeThickness="2" Stroke="Black" Margin="20" />
+        <Grid Grid.Row="1" Margin="40,15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="210"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Label Content="ID Registro:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="1" Content="Modelo:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="2" Content="Marca:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="3" Content="Capacidad:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="4" Content="Factor Forma:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="5" Content="Durabilidad:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="6" Content="Tipo de Memorias:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="7" Content="Generacion de Memorias:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="8" Content="Velocidad de Lectura:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="9" Content="Velocidad de Escritura:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="10" Content="Protocolo:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+
+            <Label Grid.Column="1" Content="{Binding ID}" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="1" Grid.Column="1" Content="{Binding Modelo}" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="2" Grid.Column="1" Content="{Binding Marca}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left"/>
+            <Label Grid.Row="3" Grid.Column="1" Content="{Binding Capacidad}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" />
+            <Label Grid.Row="4" Grid.Column="1" Content="{Binding FactorForma}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" />
+            <Label Grid.Row="5" Grid.Column="1" Content="{Binding Durabilidad}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" />
+            <Label Grid.Row="6" Grid.Column="1" Content="{Binding TipoMemorias}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" />
+            <Label Grid.Row="7" Grid.Column="1" Content="{Binding GeneracionMemorias}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left"/>
+            <Label Grid.Row="8" Grid.Column="1" Content="{Binding VelocidadLectura}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" />
+            <Label Grid.Row="9" Grid.Column="1" Content="{Binding VelocidadEscritura}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left"/>
+            <Label Grid.Row="10" Grid.Column="1" Content="{Binding Protocolo}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left"/>
+        </Grid>
+
+        <Label Grid.Row="2" Content="Opciones" FontSize="15" FontWeight="SemiBold" Background="White" Margin="32,2,382,78" VerticalContentAlignment="Center" />
+        <Grid Grid.Row="2" Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Margin="145,15,145,15" Content="Modificar" FontSize="15" Command="{Binding ClickModificar}" IsEnabled="{Binding IsBtnModificarEnabled}" Grid.ColumnSpan="2"/>
+        </Grid>
+
+        <Button Grid.Row="3" Content="Cerrar" FontSize="15" Margin="20,0,360,20" Command="{Binding ClickCerrar}"/>
     </Grid>
 </Window>

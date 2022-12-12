@@ -6,8 +6,67 @@
         xmlns:local="clr-namespace:ClienteAPI.View"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="DetallesHDD" Height="450" Width="800">
+        Title="DetallesHDD" Height="600" Width="500">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+            <RowDefinition Height="110"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Column="0" Margin="20,0"
+            Content="Detalles del HDD" FontSize="30"
+            VerticalAlignment="Center" HorizontalAlignment="Left"
+        />
+        <Rectangle Grid.Row="1" StrokeThickness="2" Stroke="Black" Margin="20,0" />
+
+        <Rectangle Grid.Row="2" StrokeThickness="2" Stroke="Black" Margin="20" />
+        <Grid Grid.Row="1" Margin="40,15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Content="ID Registro:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="1" Content="Modelo:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="2" Content="Marca:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="3" Content="Capacidad:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="4" Content="Interfaz:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="5" Content="Caché:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="6" Content="Revoluciones:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="7" Content="Tamaño:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+
+            <Label Grid.Row="0" Grid.Column="1" Content="{Binding ID}" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="1" Grid.Column="1" Content="{Binding Modelo}" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Label Grid.Row="2" Grid.Column="1" Content="{Binding Marca}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <Label Grid.Row="3" Grid.Column="1" Content="{Binding Capacidad}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left"/>
+            <Label Grid.Row="4" Grid.Column="1" Content="{Binding Interfaz}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left"/>
+            <Label Grid.Row="5" Grid.Column="1" Content="{Binding Cache}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left"/>
+            <Label Grid.Row="6" Grid.Column="1" Content="{Binding Revoluciones}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left"/>
+            <Label Grid.Row="7" Grid.Column="1" Content="{Binding Tamaño}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left"/>
+
+        </Grid>
+
+        <Label Grid.Row="2" Content="Opciones" FontSize="15" FontWeight="SemiBold" Background="White" Margin="32,2,382,78" VerticalContentAlignment="Center" />
+        <Grid Grid.Row="2" Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Margin="145,15,145,15" Content="Modificar" FontSize="15" Command="{Binding ClickModificar}" IsEnabled="{Binding IsBtnModificarEnabled}" Grid.ColumnSpan="2"/>
+        </Grid>
+
+        <Button Grid.Row="3" Content="Cerrar" FontSize="15" Margin="20,0,360,20" Command="{Binding ClickCerrar}"/>
     </Grid>
 </Window>

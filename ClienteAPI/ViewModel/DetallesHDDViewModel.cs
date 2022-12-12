@@ -6,35 +6,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using System.Windows;
+using System.Windows.Input;
 
 namespace ClienteAPI.ViewModel
 {
-    public class DetallesRAMViewModel : BaseViewModel
+    public class DetallesHDDViewModel : BaseViewModel
     {
+
         #region CONSTRUCTOR
 
-        public DetallesRAMViewModel(MemoriaRam ram, Laptop laptop)
+        public DetallesHDDViewModel(HDD hdd, Laptop laptop)
         {
-            this.ramActual = ram;
+            this.hddActual = hdd;
             this.laptopActual = laptop;
             ColocarDatos();
         }
 
-        public DetallesRAMViewModel(MemoriaRam ram, Laptop laptop, Usuario usuario)
+        public DetallesHDDViewModel(HDD hdd, Laptop laptop, Usuario usuario)
         {
-            this.ramActual = ram;
+            this.hddActual = hdd;
             this.laptopActual = laptop;
             this.usuarioActual = usuario;
             ColocarDatos();
         }
 
-        #endregion CONSTRUCTOR
+        #endregion CONSTRUCTOR 
 
         #region ATTRIBUTES
 
-        public MemoriaRam ramActual;
+        public HDD hddActual;
         public Usuario? usuarioActual;
         public Laptop laptopActual;
         private bool isBtnModificarEnabled = false;
@@ -43,11 +44,11 @@ namespace ClienteAPI.ViewModel
         public string? idRegistro = "";
         public string? modelo = "";
         public string? marca = "";
-        public string? tipoMemoria = "";
-        public int? cantidadMemoria = 0;
-        public int? cantidadMemorias = 0;
-        public int? velocidad = 0;
-        public int? ecc = 0;
+        public int? capacidad = 0;
+        public string? interfaz = "";
+        public int? cache = 0;
+        public int? revoluciones = 0;
+        public string? tamaño = "";
 
         #endregion ATRIBUTES
 
@@ -58,7 +59,6 @@ namespace ClienteAPI.ViewModel
             get { return this.isBtnModificarEnabled; }
             set { SetValue(ref this.isBtnModificarEnabled, value); }
         }
-
         public string? ID
         {
             get { return this.idRegistro; }
@@ -77,34 +77,34 @@ namespace ClienteAPI.ViewModel
             set { SetValue(ref this.marca, value); }
         }
 
-        public string? TipoMemoria
+        public int? Capacidad
         {
-            get { return this.tipoMemoria; }
-            set { SetValue(ref this.tipoMemoria, value); }
+            get { return this.capacidad; }
+            set { SetValue(ref this.capacidad, value); }
         }
 
-        public int? CantidadMemoria
+        public string? Interfaz
         {
-            get { return this.cantidadMemoria; }
-            set { SetValue(ref this.cantidadMemoria, value); }
+            get { return this.interfaz; }
+            set { SetValue(ref this.interfaz, value); }
         }
 
-        public int? CantidadMemorias
+        public int? Cache
         {
-            get { return this.cantidadMemorias; }
-            set { SetValue(ref this.cantidadMemorias, value); }
+            get { return this.cache; }
+            set { SetValue(ref this.cache, value); }
         }
 
-        public int? Velocidad
+        public int? Revoluciones
         {
-            get { return this.velocidad; }
-            set { SetValue(ref this.velocidad, value); }
+            get { return this.revoluciones; }
+            set { SetValue(ref this.revoluciones, value); }
         }
 
-        public int? ECC
+        public string? Tamaño
         {
-            get { return this.ecc; }
-            set { SetValue(ref this.ecc, value); }
+            get { return this.tamaño; }
+            set { SetValue(ref this.tamaño, value); }
         }
 
         #endregion PROPERTIES
@@ -129,21 +129,26 @@ namespace ClienteAPI.ViewModel
 
         private void ColocarDatos()
         {
-            this.ID = ramActual.idRegistro;
-            this.Modelo = ramActual.modelo;
-            this.Marca = ramActual.marca;
-            this.TipoMemoria = ramActual.tipoMemoria;
-            this.CantidadMemoria = ramActual.cantidadMemoria;
-            this.CantidadMemorias = ramActual.cantidadMemorias;
-            this.Velocidad = ramActual.velocidad;
-            this.ECC = ramActual.ecc;
+            this.ID = hddActual.idRegistro;
+            this.Modelo = hddActual.modelo;
+            this.Marca = hddActual.marca;
+            this.Capacidad = hddActual.capacidad;
+            this.Interfaz = hddActual.interfaz;
+            this.Cache = hddActual.cache;
+            this.Revoluciones = hddActual.revoluciones;
+            this.Tamaño = hddActual.tamanio;
 
             if (usuarioActual != null) { isBtnModificarEnabled = true; }
         }
 
         private void Modificar()
         {
-            MessageBox.Show("Modificando RAM", "Aviso");
+            MessageBox.Show("Modificar HDD");
+            /*
+            Application.Current.MainWindow.Hide();
+            Application.Current.MainWindow = new FormularioHDD(laptopActual, usuarioActual, hddActual);
+            Application.Current.MainWindow.Show();*/
+
         }
 
         private void Cerrar()
