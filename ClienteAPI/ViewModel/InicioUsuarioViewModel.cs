@@ -257,7 +257,7 @@ namespace ClienteAPI.ViewModel
         private void RegistrarLaptop()
         {
             Application.Current.MainWindow.Hide();
-            if(usuarioActual != null) { Application.Current.MainWindow = new RegistrarLaptop(usuarioActual); } //No es necesario el if, lo coloqué para que no mostrará el Warning
+            if(usuarioActual != null) { Application.Current.MainWindow = new FormularioLaptop(usuarioActual); } //No es necesario el if, lo coloqué para que no mostrará el Warning
             Application.Current.MainWindow.Show();
         }
 

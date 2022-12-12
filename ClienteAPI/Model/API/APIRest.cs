@@ -276,7 +276,18 @@ namespace ClienteAPI.Model.API
         #region POST
         public async Task<string> PostLaptop(Laptop laptop)
         {
-            return await POSTJSONAsync(URLAPI + URLPostLaptop, laptop);
+            string response = await POSTJSONAsync(URLAPI + URLPostLaptop, laptop);
+            if(response != "500")
+            {
+                Laptop? laptopRegistrada = DeserializarJSONLaptop(response);
+                string? idRegistro = laptopRegistrada.idRegistro;
+                return idRegistro;
+            }
+            else
+            {
+                return response;
+            }
+            
         }
 
         public async Task<string> PostUsuario(Usuario usuario)
@@ -325,7 +336,7 @@ namespace ClienteAPI.Model.API
 
         public async Task<string> PutProcesador(Procesador procesador)
         {
-            return await PUTJSONAsync(URLAPI + URLPutProcesadorA+ procesador.idRegistro + URLPutProcesadorB, procesador);            
+            return await PUTJSONAsync(URLAPI + URLPutProcesadorA + procesador.idRegistro + URLPutProcesadorB, procesador);
         }
 
         #endregion PUT

@@ -7,12 +7,12 @@ namespace ClienteAPI.View
     /// <summary>
     /// Lógica de interacción para RegistrarLaptop.xaml
     /// </summary>
-    public partial class RegistrarLaptop : Window
+    public partial class FormularioLaptop : Window
     {
-        public RegistrarLaptop(Usuario usuario)
+        public FormularioLaptop(Usuario usuario)
         {
             InitializeComponent();
-            DataContext = new RegistrarLaptopViewModel(usuario);
+            DataContext = new FormularioLaptopViewModel(usuario);
         }
     }
 }
