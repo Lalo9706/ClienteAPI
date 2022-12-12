@@ -1,4 +1,5 @@
-﻿using ClienteAPI.Model.POCO;
+﻿using ClienteAPI.Model.API;
+using ClienteAPI.Model.POCO;
 using ClienteAPI.View;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -15,7 +16,14 @@ namespace ClienteAPI.ViewModel
     {
 
         #region CONSTRUCTOR
-        public DetallesLaptopViewModel(Laptop laptop, Usuario? usuario)
+
+        public DetallesLaptopViewModel(Laptop laptop)
+        {
+            this.laptopActual = laptop;
+            InicializarDatos();
+        }
+
+        public DetallesLaptopViewModel(Laptop laptop, Usuario usuario)
         {
             this.laptopActual = laptop;
             this.usuarioActual = usuario;
@@ -27,6 +35,7 @@ namespace ClienteAPI.ViewModel
         #region ATTRIBUTES
 
         //CONSTANTES
+        private readonly APIRest apirest = new();
         private static readonly int ADMINISTRADOR = 1;
 
         private bool isBtnModificarEnabled = false;
@@ -114,13 +123,13 @@ namespace ClienteAPI.ViewModel
 
         public ICommand ClickProcesador
         {
-            get { return new RelayCommand(VerProcesador); }
+            get { return new RelayCommand(VerProcesadorAsync); }
             set { }
         }
 
         public ICommand ClickMemoriaRam
         {
-            get { return new RelayCommand(VerMemoriaRam); }
+            get { return new RelayCommand(VerMemoriaRamAsync); }
             set { }
         }
 
@@ -182,37 +191,97 @@ namespace ClienteAPI.ViewModel
             }  
         }
 
-        public void VerProcesador()
+        public async void VerProcesadorAsync()
         {
-            MessageBox.Show("Ver Procesador", "Aviso");
+            Procesador? procesador = new() ;
+            if (laptopActual.idRegistro != null) { procesador = await apirest.GetProcesador(laptopActual.idRegistro); }
+            if (procesador != null)
+            {
+                Application.Current.MainWindow.Hide();
+                if (usuarioActual != null)
+                {                   
+                    Application.Current.MainWindow = new DetallesProcesador(procesador, laptopActual, usuarioActual);
+                }
+                else
+                {
+                    Application.Current.MainWindow = new DetallesProcesador(procesador, laptopActual);
+                }
+                Application.Current.MainWindow.Show();
+            }
+            else
+            {
+                if (usuarioActual != null)
+                {
+                    MessageBoxResult respuesta =
+                    MessageBox.Show("No se encontró el procesador ¿Desea registrarlo?", "Aviso", MessageBoxButton.YesNo);
+                    if (respuesta == MessageBoxResult.Yes)
+                    {
+                        Application.Current.MainWindow.Hide();
+                        Application.Current.MainWindow = new FormularioProcesador(laptopActual, usuarioActual);
+                        Application.Current.MainWindow.Show();
+                    }
+                }
+                else { MessageBox.Show("No se encontró el procesador\nInicie sesión para poder registrarlo", "Aviso"); }
+
+            }
         }
 
-        public void VerMemoriaRam()
+        public async void VerMemoriaRamAsync()
         {
-            MessageBox.Show("Ver RAM", "Aviso");
+            MemoriaRam? memoriaRam = new();
+            if (laptopActual.idRegistro != null) { memoriaRam = await apirest.GetMemoriaRam(laptopActual.idRegistro); }
+            if (memoriaRam != null)
+            {
+                Application.Current.MainWindow.Hide();
+                if (usuarioActual != null)
+                {
+                    Application.Current.MainWindow = new DetallesRAM(memoriaRam, laptopActual, usuarioActual);
+                }
+                else
+                {
+                    Application.Current.MainWindow = new DetallesRAM(memoriaRam, laptopActual);
+                }
+                Application.Current.MainWindow.Show();
+            }
+            else
+            {
+                if (usuarioActual != null)
+                {
+                    MessageBoxResult respuesta =
+                    MessageBox.Show("No se encontró la memoria RAM ¿Desea registrarla?", "Aviso", MessageBoxButton.YesNo);
+                    if (respuesta == MessageBoxResult.Yes)
+                    {
+                        Application.Current.MainWindow.Hide();
+                        Application.Current.MainWindow = new FormularioProcesador(laptopActual, usuarioActual);
+                        Application.Current.MainWindow.Show();
+                    }
+                }
+                else { MessageBox.Show("No se encontró la RAM\nInicie sesión para poder registrarla", "Aviso"); }
+
+            }
         }
 
-        public void VerAlmacenamiento()
+        public static void VerAlmacenamiento()
         {
             MessageBox.Show("Ver Almacenamiento", "Aviso");
         }
 
-        public void VerTarjetaVideo()
+        public static void VerTarjetaVideo()
         {
             MessageBox.Show("Ver GPU", "Aviso");
         }
 
-        public void VerPantalla()
+        public static void VerPantalla()
         {
             MessageBox.Show("Ver Pantalla", "Aviso");
         }
 
-        public void Modificar()
+        public static void Modificar()
         {
             MessageBox.Show("Modificar Laptop", "Aviso");
         }
 
-        public void Eliminar()
+        public static void Eliminar()
         {
             MessageBox.Show("Eliminar Laptop", "Aviso");
         }
@@ -223,14 +292,12 @@ namespace ClienteAPI.ViewModel
             if(usuarioActual != null)
             {
                 Application.Current.MainWindow = new InicioUsuario(usuarioActual);
-                Application.Current.MainWindow.Show();
             }
             else
             {
                 Application.Current.MainWindow = new Inicio();
-                Application.Current.MainWindow.Show();
             }
-            
+            Application.Current.MainWindow.Show();
         }
 
 

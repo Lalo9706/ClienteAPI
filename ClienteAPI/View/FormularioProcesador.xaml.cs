@@ -17,20 +17,22 @@ using System.Windows.Shapes;
 namespace ClienteAPI.View
 {
     /// <summary>
-    /// Lógica de interacción para DetallesLaptop.xaml
+    /// Lógica de interacción para FormularioProcesador.xaml
     /// </summary>
-    public partial class DetallesLaptop : Window
+    public partial class FormularioProcesador : Window
     {
-        public DetallesLaptop(Laptop laptop)
+        //Formulario cuando he iniciado sesión
+        public FormularioProcesador(Laptop laptop, Usuario usuario)
         {
             InitializeComponent();
-            DataContext = new DetallesLaptopViewModel(laptop);
+            DataContext = new FormularioProcesadorViewModel(laptop, usuario);
         }
 
-        public DetallesLaptop(Laptop laptop, Usuario usuario)
+        //Constructor para Modificar Laptop
+        public FormularioProcesador(Laptop laptop, Usuario usuario, Procesador procesador)
         {
             InitializeComponent();
-            DataContext = new DetallesLaptopViewModel(laptop, usuario);
+            DataContext = new FormularioProcesadorViewModel(laptop, usuario, procesador);
         }
     }
 }

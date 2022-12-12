@@ -18,7 +18,11 @@ namespace ClienteAPI.Model.API
 {
     public class APIRest
     {
+        #region HTTPCLIENT
+
         private readonly HttpClient client = new();
+
+        #endregion
 
         #region URL
 

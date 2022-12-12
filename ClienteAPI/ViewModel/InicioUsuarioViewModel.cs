@@ -26,7 +26,7 @@ namespace ClienteAPI.ViewModel
             ObtenerLaptopsAsync();
         }
 
-        public InicioUsuarioViewModel(Usuario? usuario)
+        public InicioUsuarioViewModel(Usuario usuario)
         {
             ObtenerLaptopsAsync();
             this.usuarioActual = usuario;
@@ -72,12 +72,6 @@ namespace ClienteAPI.ViewModel
         {
             get { return this.nombreUsuario; }
             set { SetValue(ref this.nombreUsuario, value); }
-        }
-
-        public Usuario? UsuarioActual
-        {
-            get { return this.usuarioActual; }
-            set { SetValue(ref this.usuarioActual, value); }
         }
 
         //Busqueda
@@ -263,7 +257,7 @@ namespace ClienteAPI.ViewModel
         private void RegistrarLaptop()
         {
             Application.Current.MainWindow.Hide();
-            Application.Current.MainWindow = new RegistrarLaptop(usuarioActual);
+            if(usuarioActual != null) { Application.Current.MainWindow = new RegistrarLaptop(usuarioActual); } //No es necesario el if, lo coloqué para que no mostrará el Warning
             Application.Current.MainWindow.Show();
         }
 
@@ -272,7 +266,14 @@ namespace ClienteAPI.ViewModel
             if(LaptopSeleccionada != null)
             {
                 Application.Current.MainWindow.Hide();
-                Application.Current.MainWindow = new DetallesLaptop(LaptopSeleccionada, usuarioActual);
+                if (usuarioActual != null)
+                {   
+                    Application.Current.MainWindow = new DetallesLaptop(LaptopSeleccionada, usuarioActual);
+                }
+                else
+                {
+                    Application.Current.MainWindow = new DetallesLaptop(LaptopSeleccionada);
+                }
                 Application.Current.MainWindow.Show();
             }
             else { MessageBox.Show("Primero Selecciona una Laptop de la lista", "Aviso"); }

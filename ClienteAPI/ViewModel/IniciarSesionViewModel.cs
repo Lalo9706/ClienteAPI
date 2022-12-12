@@ -124,12 +124,6 @@ namespace ClienteAPI.ViewModel
             Application.Current.MainWindow.Show();            
         }
 
-        public void OnWindowClosing(object? sender, CancelEventArgs? e)
-        {
-            MessageBoxResult r = MessageBox.Show("¿Quieres salir de la aplicacion?", "Salir", MessageBoxButton.YesNo);
-            if (r == MessageBoxResult.Yes) { Application.Current.MainWindow.Close(); }
-        }
-
         #endregion
 
     }

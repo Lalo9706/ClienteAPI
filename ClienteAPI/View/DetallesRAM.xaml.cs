@@ -17,20 +17,20 @@ using System.Windows.Shapes;
 namespace ClienteAPI.View
 {
     /// <summary>
-    /// Lógica de interacción para DetallesLaptop.xaml
+    /// Lógica de interacción para DetallesRAM.xaml
     /// </summary>
-    public partial class DetallesLaptop : Window
+    public partial class DetallesRAM : Window
     {
-        public DetallesLaptop(Laptop laptop)
+        public DetallesRAM(MemoriaRam ram, Laptop laptop)
         {
             InitializeComponent();
-            DataContext = new DetallesLaptopViewModel(laptop);
+            DataContext = new DetallesRAMViewModel(ram, laptop);
         }
 
-        public DetallesLaptop(Laptop laptop, Usuario usuario)
+        public DetallesRAM(MemoriaRam ram, Laptop laptop, Usuario usuario)
         {
             InitializeComponent();
-            DataContext = new DetallesLaptopViewModel(laptop, usuario);
+            DataContext = new DetallesRAMViewModel(ram, laptop, usuario);
         }
     }
 }

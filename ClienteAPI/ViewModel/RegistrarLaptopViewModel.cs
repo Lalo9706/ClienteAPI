@@ -36,7 +36,7 @@ namespace ClienteAPI.ViewModel
         public string pantalla = "";
 
         //Sesion
-        public Usuario? usuarioActual = new();
+        public Usuario usuarioActual = new();
 
         #endregion ATTRIBUTES
 
@@ -90,7 +90,7 @@ namespace ClienteAPI.ViewModel
 
         public ICommand ClickCancelar
         {
-            get { return new RelayCommand(Cancelar); }
+            get { return new RelayCommand(Cerrar); }
             set { }
         }
 
@@ -120,26 +120,21 @@ namespace ClienteAPI.ViewModel
                 if(response != "500")
                 {
                     MessageBox.Show("Laptop Registrada con Exito", "Aviso");
+                    Cerrar();
                 }
-                else
-                {
-                    MessageBox.Show("No se registró la laptop", "Aviso");
-                }
+                else { MessageBox.Show("No se registró la laptop", "Aviso"); }
             }
-            else
-            {
-                MessageBox.Show("Hay campos vacios", "Alerta");
-            }
+            else { MessageBox.Show("Hay campos vacios", "Alerta"); }
         }
 
-        private void Cancelar()
+        private void Cerrar()
         {
             Application.Current.MainWindow.Hide();
             Application.Current.MainWindow = new InicioUsuario(usuarioActual);
             Application.Current.MainWindow.Show();
         }
 
-        #endregion METHODSa
+        #endregion METHODS
 
     }
 }
