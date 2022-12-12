@@ -1,5 +1,6 @@
 ﻿using ClienteAPI.Model.API;
 using ClienteAPI.Model.POCO;
+using ClienteAPI.View;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,13 @@ namespace ClienteAPI.ViewModel
 {
     public class RegistrarLaptopViewModel : BaseViewModel
     {
+        #region CONSTRUCTOR
+        public RegistrarLaptopViewModel(Usuario usuario)
+        {
+            this.usuarioActual = usuario;
+        }
+
+        #endregion
 
         #region ATTRIBUTES
 
@@ -26,6 +34,9 @@ namespace ClienteAPI.ViewModel
         public string memoriaRam = "";
         public string almacenamiento = "";
         public string pantalla = "";
+
+        //Sesion
+        public Usuario? usuarioActual = new();
 
         #endregion ATTRIBUTES
 
@@ -123,10 +134,12 @@ namespace ClienteAPI.ViewModel
 
         private void Cancelar()
         {
-            MessageBox.Show("Botón Cerrar", "Aviso");
+            Application.Current.MainWindow.Hide();
+            Application.Current.MainWindow = new InicioUsuario(usuarioActual);
+            Application.Current.MainWindow.Show();
         }
 
-        #endregion METHODS
+        #endregion METHODSa
 
     }
 }

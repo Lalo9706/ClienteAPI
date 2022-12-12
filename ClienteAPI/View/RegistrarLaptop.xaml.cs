@@ -1,4 +1,5 @@
-﻿using ClienteAPI.ViewModel;
+﻿using ClienteAPI.Model.POCO;
+using ClienteAPI.ViewModel;
 using System.Windows;
 
 namespace ClienteAPI.View
@@ -8,10 +9,10 @@ namespace ClienteAPI.View
     /// </summary>
     public partial class RegistrarLaptop : Window
     {
-        public RegistrarLaptop()
+        public RegistrarLaptop(Usuario usuario)
         {
             InitializeComponent();
-            DataContext = new RegistrarLaptopViewModel();
+            DataContext = new RegistrarLaptopViewModel(usuario);
         }
     }
 }

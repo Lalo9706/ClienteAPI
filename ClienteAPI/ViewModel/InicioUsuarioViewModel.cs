@@ -30,7 +30,7 @@ namespace ClienteAPI.ViewModel
         {
             ObtenerLaptopsAsync();
             this.usuarioActual = usuario;
-            this.NombreUsuario = usuarioActual?.NombreUsuario;
+            this.NombreUsuario = usuarioActual?.nombreUsuario;
         }
 
         #endregion CONSTRUCTOR
@@ -263,7 +263,7 @@ namespace ClienteAPI.ViewModel
         private void RegistrarLaptop()
         {
             Application.Current.MainWindow.Hide();
-            Application.Current.MainWindow = new RegistrarLaptop();
+            Application.Current.MainWindow = new RegistrarLaptop(usuarioActual);
             Application.Current.MainWindow.Show();
         }
 
@@ -288,7 +288,9 @@ namespace ClienteAPI.ViewModel
 
         private void Registrarse()
         {
-            MessageBox.Show("Botón Registrarse Presionado");
+            Application.Current.MainWindow.Hide();
+            Application.Current.MainWindow = new RegistrarUsuario();
+            Application.Current.MainWindow.Show();
         }
 
         private void VerPerfil()

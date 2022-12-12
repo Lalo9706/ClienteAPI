@@ -178,7 +178,7 @@ namespace ClienteAPI.ViewModel
             if(usuarioActual != null) 
             { 
                 isBtnModificarEnabled = true;
-                if (usuarioActual.Administrador == ADMINISTRADOR) { isBtnEliminarEnabled = true; }
+                if (usuarioActual.administrador == ADMINISTRADOR) { isBtnEliminarEnabled = true; }
             }  
         }
 

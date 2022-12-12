@@ -2,13 +2,13 @@
 {
     public class Procesador
     {
-        public string? IdRegistro { get; set; }
-        public string? Modelo { get; set; }
-        public string? Marca { get; set; }
-        public int? NumeroNucleos { get; set; }
-        public int? NumeroHilos { get; set; }
-        public double? VelocidadMinima { get; set; }
-        public double? VelocidadMaxima { get; set; }
-        public int? Litografia { get; set; }
+        public string? idRegistro { get; set; }
+        public string? modelo { get; set; }
+        public string? marca { get; set; }
+        public int? numeroNucleos { get; set; }
+        public int? numeroHilos { get; set; }
+        public double? velocidadMinima { get; set; }
+        public double? velocidadMaxima { get; set; }
+        public int? litografia { get; set; }
     }
 }

@@ -2,13 +2,13 @@
 {
     public class TarjetaVideo
     {
-        public string? IdRegistro { get; set; }
-        public string? Modelo { get; set; }
-        public string? Marca { get; set; }
-        public int? CantidadVram { get; set; }
-        public string? TipoMemoria { get; set; }
-        public int? Bits { get; set; }
-        public double? VelocidadReloj { get; set; }
-        public string? Tipo { get; set; }
+        public string? idRegistro { get; set; }
+        public string? modelo { get; set; }
+        public string? marca { get; set; }
+        public int? cantidadVram { get; set; }
+        public string? tipoMemoria { get; set; }
+        public int? bits { get; set; }
+        public double? velocidadReloj { get; set; }
+        public string? tipo { get; set; }
     }
 }

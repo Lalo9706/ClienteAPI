@@ -2,12 +2,12 @@
 {
     public class Pantalla
     {
-        public string? IdRegistro { get; set; }
-        public string? Modelo { get; set; }
-        public string? Resolucion { get; set; }
-        public string? Calidad { get; set; }
-        public string? TipoPantalla { get; set; }
-        public string? Tamanio { get; set; }
-        public int? FrecuenciaRefresco { get; set; }
+        public string? idRegistro { get; set; }
+        public string? modelo { get; set; }
+        public string? resolucion { get; set; }
+        public string? calidad { get; set; }
+        public string? tipoPantalla { get; set; }
+        public string? tamanio { get; set; }
+        public int? frecuenciaRefresco { get; set; }
     }
 }

@@ -87,7 +87,7 @@ namespace ClienteAPI.ViewModel
 
                 if(usuario != null)
                 {
-                    if (_contraseña == usuario.Contrasena)
+                    if (_contraseña == usuario.contrasena)
                     {
                         MessageBox.Show("Inicio de Sesión Exitoso", "Aviso");
                         Application.Current.MainWindow.Hide();
@@ -112,7 +112,9 @@ namespace ClienteAPI.ViewModel
 
         private void Registrarse()
         {
-            MessageBox.Show("Botón Registrarse Presionado");
+            Application.Current.MainWindow.Hide();
+            Application.Current.MainWindow = new RegistrarUsuario();
+            Application.Current.MainWindow.Show();
         }
 
         private void Volver()

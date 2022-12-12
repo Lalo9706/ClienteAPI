@@ -2,7 +2,7 @@
 {
     public class Almacenamiento
     {
-        public string? IdRegistro { get; set; }
-        public string? TipoAlmacenamiento { get; set; }
+        public string? idRegistro { get; set; }
+        public string? tipoAlmacenamiento { get; set; }
     }
 }

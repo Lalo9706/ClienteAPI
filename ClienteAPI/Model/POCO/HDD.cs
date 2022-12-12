@@ -2,13 +2,13 @@
 {
     public class HDD
     {
-        public string? IdRegistro { get; set; }
-        public string? Marca { get; set; }
-        public string? Modelo { get; set; }
-        public int? Capacidad { get; set; }
-        public string? Interfaz { get; set; }
-        public int? Cache { get; set;}
-        public int? Revoluciones { get; set; }
-        public string? Tamanio { get; set; }
+        public string? idRegistro { get; set; }
+        public string? marca { get; set; }
+        public string? modelo { get; set; }
+        public int? capacidad { get; set; }
+        public string? interfaz { get; set; }
+        public int? cache { get; set;}
+        public int? revoluciones { get; set; }
+        public string? tamanio { get; set; }
     }
 }

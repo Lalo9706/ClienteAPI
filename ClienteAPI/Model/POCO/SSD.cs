@@ -2,16 +2,16 @@
 {
     public class SSD
     {
-        public string? IdRegistro { get; set; }
-        public string? Marca { get; set; }
-        public string? Modelo { get; set; }
-        public int? Capacidad { get; set; }
-        public string? FactorForma { get; set; }
-        public string? Durabilidad { get; set; }
-        public string? TipoMemorias { get; set; }
-        public string? GeneracionMemorias { get; set; }
-        public string? VelocidadLectura { get; set; }
-        public string? VelocidadEscritura { get; set; }
-        public string? Protocolo { get; set; }
+        public string? idRegistro { get; set; }
+        public string? marca { get; set; }
+        public string? modelo { get; set; }
+        public int? capacidad { get; set; }
+        public string? factorForma { get; set; }
+        public string? durabilidad { get; set; }
+        public string? tipoMemorias { get; set; }
+        public string? generacionMemorias { get; set; }
+        public string? velocidadLectura { get; set; }
+        public string? velocidadEscritura { get; set; }
+        public string? protocolo { get; set; }
     }
 }

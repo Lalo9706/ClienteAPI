@@ -2,11 +2,11 @@
 {
     public class Usuario
     {
-        public string? NombreUsuario { get; set; }
-        public string? Nombre { get; set; }
-        public string? Apellido { get; set; }
-        public string? CorreoElectronico { get; set; }
-        public string? Contrasena { get; set; }
-        public int? Administrador { get; set; }
+        public string? nombreUsuario { get; set; }
+        public string? nombre { get; set; }
+        public string? apellido { get; set; }
+        public string? correoElectronico { get; set; }
+        public string? contrasena { get; set; }
+        public int? administrador { get; set; }
     }
 }

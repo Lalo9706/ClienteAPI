@@ -323,55 +323,55 @@ namespace ClienteAPI.Model.API
         #endregion METHODS
 
         #region DESERIALIZE
-        private Usuario? DeserializarJSONUsuario(string usuarioJSON)
+        private static Usuario? DeserializarJSONUsuario(string usuarioJSON)
         {
             Usuario? usuario = JsonConvert.DeserializeObject<Usuario>(usuarioJSON);
             return usuario;
         }
 
-        private List<Laptop>? DeserializarJSONLaptops(string laptopsJSON)
+        private static List<Laptop>? DeserializarJSONLaptops(string laptopsJSON)
         {
             List<Laptop>? laptops = JsonConvert.DeserializeObject<List<Laptop>>(laptopsJSON);
             return laptops;
         }
 
-        private Laptop? DeserializarJSONLaptop(string laptopJSON)
+        private static Laptop? DeserializarJSONLaptop(string laptopJSON)
         {
             Laptop? laptop = JsonConvert.DeserializeObject<Laptop>(laptopJSON);
             return laptop;
         }
 
-        private Procesador? DeserializarJSONProcesador(string procesadorJSON)
+        private static Procesador? DeserializarJSONProcesador(string procesadorJSON)
         {
             return JsonConvert.DeserializeObject<Procesador>(procesadorJSON);
         }
 
-        private MemoriaRam? DeserializarJSONMemoriaRam(string memoriaRamJSON)
+        private static MemoriaRam? DeserializarJSONMemoriaRam(string memoriaRamJSON)
         {
             return JsonConvert.DeserializeObject<MemoriaRam>(memoriaRamJSON);
         }
 
-        private Almacenamiento? DeserializarJSONAlmacenamiento(string almacenamientoJSON)
+        private static Almacenamiento? DeserializarJSONAlmacenamiento(string almacenamientoJSON)
         {
             return JsonConvert.DeserializeObject<Almacenamiento>(almacenamientoJSON);
         }
 
-        private HDD? DeserializarJSONHDD(string hddJSON)
+        private static HDD? DeserializarJSONHDD(string hddJSON)
         {
             return JsonConvert.DeserializeObject<HDD>(hddJSON);
         }
 
-        private SSD? DeserializarJSONSSD(string ssdJSON)
+        private static SSD? DeserializarJSONSSD(string ssdJSON)
         {
             return JsonConvert.DeserializeObject<SSD>(ssdJSON);
         }
 
-        private TarjetaVideo? DeserializarJSONTarjetaVideo(string tarjetaVideoJSON)
+        private static TarjetaVideo? DeserializarJSONTarjetaVideo(string tarjetaVideoJSON)
         {
             return JsonConvert.DeserializeObject<TarjetaVideo>(tarjetaVideoJSON);
         }
 
-        private Pantalla? DeserializarJSONPantalla(string pantallaJSON)
+        private static Pantalla? DeserializarJSONPantalla(string pantallaJSON)
         {
             return JsonConvert.DeserializeObject<Pantalla>(pantallaJSON);
         }
