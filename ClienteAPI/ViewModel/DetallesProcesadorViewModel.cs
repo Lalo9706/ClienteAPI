@@ -143,7 +143,10 @@ namespace ClienteAPI.ViewModel
 
         private void Modificar()
         {
-            MessageBox.Show("Modificando Procesador", "Aviso");
+            Application.Current.MainWindow.Hide();
+            Application.Current.MainWindow = new FormularioProcesador(laptopActual, usuarioActual, procesadorActual);
+            Application.Current.MainWindow.Show();
+
         }
 
         private void Cerrar()

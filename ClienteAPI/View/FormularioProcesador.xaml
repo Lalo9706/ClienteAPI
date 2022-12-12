@@ -45,7 +45,7 @@
             <Label Grid.Row="6" Content="Velocidad Maxima:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
             <Label Grid.Row="7" Content="Litografia:" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
 
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ID}" FontSize="15" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ID}" FontSize="15" VerticalAlignment="Center" IsEnabled="False"/>
             <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Modelo}" FontSize="15" VerticalAlignment="Center"/>
             <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Marca}" FontSize="15" VerticalAlignment="Center"/>
             <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding NumeroNucleos}" FontSize="15" VerticalAlignment="Center"/>
@@ -56,7 +56,7 @@
 
         </Grid>
 
-        <Button Grid.Row="2" Content="{Binding Titulo}" FontSize="15" Margin="340,20,23,20" Command="{Binding ClickRegistrarProcesador}"/>
+        <Button Grid.Row="2" Content="{Binding Titulo}" FontSize="15" Margin="299,20,23,20" Command="{Binding ClickRegistrarProcesador}"/>
         <Button Grid.Row="2" Content="Cancelar" FontSize="15"  Margin="20,20,360,20" Command="{Binding ClickCancelar}"/>
     </Grid>
 </Window>

@@ -41,6 +41,9 @@ namespace ClienteAPI.Model.API
 
         //Procesador
         private static readonly string URLGetPutDeleteProcesador = "/procesador/";
+        private static readonly string URLPutProcesadorA = "/procesador/";
+        private static readonly string URLPutProcesadorB = "?procesador_id=$idRegistro";
+
         private static readonly string URLPostProcesador = "/procesador";
 
         //Memoria Ram
@@ -112,8 +115,10 @@ namespace ClienteAPI.Model.API
         }
 
         //PUT
-        public async Task<string> PUTJSONAsync(string url, string objectJSON)
+        public async Task<string> PUTJSONAsync(string url, object objeto)
         {
+            string objectJSON = JsonConvert.SerializeObject(objeto);
+
             HttpContent content = new StringContent(objectJSON, Encoding.UTF8, "application/json");
             var httpResponse = await client.PutAsync(url, content);
             if (httpResponse.IsSuccessStatusCode)
@@ -317,6 +322,11 @@ namespace ClienteAPI.Model.API
         #endregion POST
 
         #region PUT
+
+        public async Task<string> PutProcesador(Procesador procesador)
+        {
+            return await PUTJSONAsync(URLAPI + URLPutProcesadorA+ procesador.idRegistro + URLPutProcesadorB, procesador);            
+        }
 
         #endregion PUT
 

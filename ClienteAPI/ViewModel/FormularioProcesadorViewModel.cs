@@ -20,6 +20,7 @@ namespace ClienteAPI.ViewModel
         {
             this.UsuarioActual = usuario;
             this.LaptopActual = laptop;
+            this.ID = LaptopActual.idRegistro;
             this.Titulo = "Registrar Procesador";
         }
 
@@ -29,6 +30,8 @@ namespace ClienteAPI.ViewModel
             this.LaptopActual = laptop;
             this.ProcesadorEnEdicion = procesador;
             this.Titulo = "Actualizar Procesador";
+            this.isEdicion = true;
+            ColocarDatos();
         }
 
         #endregion CONSTRUCTOR
@@ -41,13 +44,14 @@ namespace ClienteAPI.ViewModel
         public Laptop LaptopActual;
         public Usuario UsuarioActual;
         public Procesador? ProcesadorEnEdicion = null;
+        public bool isEdicion = false;
 
         public string? titulo = "";
 
         //Procesador
-        public string idRegistro = "";
-        public string modelo = "";
-        public string marca = "";
+        public string? idRegistro = "";
+        public string? modelo = "";
+        public string? marca = "";
         public int numeroNucleos = 0;
         public int numeroHilos = 0;
         public double velocidadMinima = 0;
@@ -64,19 +68,19 @@ namespace ClienteAPI.ViewModel
             set { SetValue(ref this.titulo, value); }
         }
 
-        public string ID
+        public string? ID
         {
             get { return this.idRegistro; }
             set { SetValue(ref this.idRegistro, value); }
         }
 
-        public string Modelo
+        public string? Modelo
         {
             get { return this.modelo; }
             set { SetValue(ref this.modelo, value); }
         }
 
-        public string Marca
+        public string? Marca
         {
             get { return this.marca; }
             set { SetValue(ref this.marca, value); }
@@ -132,6 +136,22 @@ namespace ClienteAPI.ViewModel
 
         #region METHODS
 
+        private void ColocarDatos()
+        {
+            if(ProcesadorEnEdicion != null)
+            {
+                ID = this.ProcesadorEnEdicion.idRegistro;
+                Modelo = this.ProcesadorEnEdicion.modelo;
+                Marca = this.ProcesadorEnEdicion.marca;
+                NumeroNucleos = this.ProcesadorEnEdicion.numeroNucleos;
+                NumeroHilos = this.ProcesadorEnEdicion.numeroHilos;
+                VelocidadMinima = this.ProcesadorEnEdicion.velocidadMinima;
+                VelocidadMaxima = this.ProcesadorEnEdicion.velocidadMaxima;
+                Litografia = this.ProcesadorEnEdicion.litografia;
+            } 
+            
+        }
+
         private async void RegistrarProcesadorAsync()
         {
             if (!this.ID.Equals("") &&
@@ -144,15 +164,38 @@ namespace ClienteAPI.ViewModel
                 !this.Litografia.Equals(0))
             {
                 Procesador procesador = new Procesador();
+                procesador.idRegistro = ID;
+                procesador.modelo = Modelo;
+                procesador.marca = Marca;
+                procesador.numeroNucleos = NumeroNucleos;
+                procesador.numeroHilos = NumeroHilos;
+                procesador.velocidadMinima = VelocidadMinima;
+                procesador.velocidadMaxima = VelocidadMaxima;
+                procesador.litografia = Litografia;
 
-
-                string response = await apirest.PostProcesador(procesador);
-                if (response != "500")
+                if (isEdicion == true)
                 {
-                    MessageBox.Show("Procesador Registrado con Exito", "Aviso");
-                    Cerrar();
+                    
+                    string responsePut = await apirest.PutProcesador(procesador);
+                    if (responsePut != "500")
+                    {
+                        MessageBox.Show("Procesador Actualizado con Exito", "Aviso");
+                        Cerrar();
+                    }
+                    else { MessageBox.Show("No se actualizó el procesador", "Aviso"); }
                 }
-                else { MessageBox.Show("No se registró el procesador", "Aviso"); }
+                else
+                {
+                    string responsePost = await apirest.PostProcesador(procesador);
+                    if (responsePost != "500")
+                    {
+                        MessageBox.Show("Procesador Registrado con Exito", "Aviso");
+                        Cerrar();
+                    }
+                    else { MessageBox.Show("No se registró el procesador", "Aviso"); }
+                }
+
+                
             }
             else { MessageBox.Show("Hay campos vacios", "Alerta"); }
         }
