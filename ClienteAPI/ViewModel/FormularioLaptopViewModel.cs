@@ -170,10 +170,21 @@ namespace ClienteAPI.ViewModel
             memoriaRam.ecc = 0;
             _ = apirest.PostMemoriaRam(memoriaRam);
 
-            Almacenamiento almacenamiento = new Almacenamiento();
-            almacenamiento.idRegistro = idRegistroLaptop;
-            almacenamiento.tipoAlmacenamiento = tipoAlmacenamiento;
-            _ = apirest.PostAlmacenamiento(almacenamiento);
+
+            if(isSSD == true)
+            {
+                Almacenamiento almacenamiento = new Almacenamiento();
+                almacenamiento.idRegistro = idRegistroLaptop;
+                almacenamiento.tipoAlmacenamiento = "SSD";
+                _ = apirest.PostAlmacenamiento(almacenamiento);
+            }
+            else
+            {
+                Almacenamiento almacenamiento = new Almacenamiento();
+                almacenamiento.idRegistro = idRegistroLaptop;
+                almacenamiento.tipoAlmacenamiento = "HDD";
+                _ = apirest.PostAlmacenamiento(almacenamiento);
+            }
 
             TarjetaVideo tarjetaVideo = new TarjetaVideo();
             tarjetaVideo.idRegistro = idRegistroLaptop;
